@@ -1,0 +1,25 @@
+﻿
+FNC INT Sum(INT[] arr, INT size)
+{
+	INT sum = 0 ;
+	FOR INT i = 0 ; i < size ; i += 1 ;
+	{
+		sum += arr[i] ;
+	}
+	RETURN sum ;
+}
+
+MAIN
+{
+	INT size = 10 ;
+	INT[] numbers = new INT[][ size ] ;
+
+	FOR INT i = 0 ; i < size ; i += 1 ;
+	{
+		arr[i] = i ;
+	}
+
+	INT total = Sum(numbers, size) ;
+
+	OUTPUT total ;
+}
