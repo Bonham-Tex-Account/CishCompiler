@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CishCompiler.Tokens
 {
-    class ValueToken : Token
+    public class ValueToken : Token
     {
-        public override string RegexPattern => "\\b\\d+(\\.\\d+)?\\b|\"([^\"]*)\"";
-        public ValueToken(string value, int lineNumber) : base(value, lineNumber)
+        public ValueToken(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
+
+        public override string RegexPattern => "\\b\\d+(\\.\\d+)?\\b|\"([^\"]*)\"";
+
+        
     }
 }

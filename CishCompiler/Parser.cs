@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CishCompiler
 {
-    internal class Parser
+    public class Parser
     {
     }
 }

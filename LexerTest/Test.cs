@@ -1,0 +1,17 @@
+
+using CishCompiler;
+
+namespace LexerTest
+{
+    public class Test
+    {
+        [Fact]
+        public void TestFile()
+        {
+            // Correct the file extension spelling error from "cish" to "cs"
+            string[] codeLines = File.ReadAllLines("C:\\Users\\Tex\\Documents\\Visual Studio 2022\\Projects\\CishCompiler\\CishCompiler\\CishSmallProjects\\Test.cish");
+            var temp =Lexer.TokenizeInputCode(codeLines);
+            ;
+        }
+    }
+}

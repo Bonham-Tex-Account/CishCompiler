@@ -9,29 +9,31 @@ namespace CishCompiler.Tokens
 {
     public abstract class Token
     {
-        public string Value { get; private set; } // convert to span if needed for performance
+        public ReadOnlyMemory<char> Value { get; private set; } // convert to span if needed for performance
         public int LineNumber { get; private set; }
+        public int TokenNumber { get; private set; }
 
         public abstract string RegexPattern { get; }
 
 
-        public Token(string value, int lineNumber)
+        public Token( ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
         {
             Value = value;
             LineNumber = lineNumber;
-
+            TokenNumber = tokenNumber;
         }
-        public bool IsRegexMatch(string input)
+        public static bool IsRegexMatch(ReadOnlySpan<char> input,string regexPattern)
         {
-            if (input == null || RegexPattern == null)
+            if (input == null || regexPattern == null)
                 throw new ArgumentNullException("Input and pattern cannot be null.");
 
-            return Regex.IsMatch(input, RegexPattern);
+            return Regex.IsMatch(input, regexPattern);
         }
+        
 
         public override string ToString()
         {
-            return $"{Value} (Line: {LineNumber})";
+            return $"{Value} (Line: {LineNumber}) (Token: {TokenNumber})";
         }
     }
 }
