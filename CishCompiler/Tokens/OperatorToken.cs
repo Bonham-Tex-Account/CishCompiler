@@ -8,7 +8,7 @@ namespace CishCompiler.Tokens
 {
     public class OperatorToken : Token
     {
-        public override string RegexPattern => throw new NotImplementedException();
+        public override string RegexPattern => "([!@*/><=+\\-&^])(?:=|\\1)?";
 
         public OperatorToken(string value, int lineNumber) : base(value, lineNumber)
         {

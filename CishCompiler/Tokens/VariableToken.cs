@@ -8,7 +8,7 @@ namespace CishCompiler.Tokens
 {
     public class VariableToken : Token
     {
-        public override string RegexPattern => throw new NotImplementedException();
+        public override string RegexPattern => "\\b[a-z]+\\b";
         public VariableToken(string value, int lineNumber) : base(value, lineNumber)
         {
         }

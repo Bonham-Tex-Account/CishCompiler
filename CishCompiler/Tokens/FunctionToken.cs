@@ -8,7 +8,7 @@ namespace CishCompiler.Tokens
 {
     public class FunctionToken : Token
     {
-        public override string RegexPattern => throw new NotImplementedException();
+        public override string RegexPattern => "\\b[A-Z][a-z]*\\b\\(";
         public FunctionToken(string value, int lineNumber) : base(value, lineNumber)
         {
         }

@@ -8,7 +8,7 @@ namespace CishCompiler.Tokens
 {
     public class ObjectToken : Token
     {
-        public override string RegexPattern => throw new NotImplementedException();
+        public override string RegexPattern => "\b[A-Z][a-z]*\b";
         public ObjectToken(string value, int lineNumber) : base(value, lineNumber)
         {
         }
