@@ -12,22 +12,35 @@ namespace CishCompiler
         enum TokenType
         {
             Keyword,
-            Operator,
+            NonAssignmentOperator,
             Value,
             Error,
             Function,
             Object,
-            Variable
+            Identifier,
+            LineEndToken,
+            OpenParen,
+            CloseParen,
+            AssignmentOperator,
+            OpenCurly,
+            CloseCurly,
         }
-        static Dictionary<TokenType, string> possibleTokens = new Dictionary<TokenType, string>() 
-        { 
+        static Dictionary<TokenType, string> possibleTokens = new Dictionary<TokenType, string>()
+        {
             { TokenType.Keyword,  "\\b(?:MAIN|IFELSE|IF|ELSE|FOR|RETURN|CLASS|VAR\\?|BREAK|CONTINUE|GOTO|WHILE|THEN|INPUT|OUTPUT|FNC)\\b"},
             { TokenType.Object, "\b[A-Z][a-z]*\b" },
             { TokenType.Function, "\\b[A-Z][a-z]*\\b\\(" },
-            { TokenType.Operator, "([!@*/><=+\\-&^])(?:=|\\1)?" }, 
-            { TokenType.Value, "\\b\\d+(\\.\\d+)?\\b|\"([^\"]*)\"" }, 
-            { TokenType.Variable,  "\\b[a-z]+\\b" }, 
-            { TokenType.Error, ".+" } 
+            { TokenType.NonAssignmentOperator, "([!@*/><=+\\-&^])(?:=|\\1)?" },
+            { TokenType.Value, "\\b\\d+(\\.\\d+)?\\b|\"([^\"]*)\"" },
+            { TokenType.Identifier,  "\\b[a-z]+\\b" },
+            { TokenType.Error, ".+" },
+            { TokenType.OpenParen,"\\("},
+            { TokenType.LineEndToken,";"},           
+            { TokenType.CloseParen, "\\)" },
+            { TokenType.AssignmentOperator, "=" },
+            { TokenType.OpenCurly, "{" },
+            { TokenType.CloseCurly, "}" }
+           
         };
         public static List<Token> TokenizeInputCode(string[] codeLines)
         {
@@ -52,9 +65,7 @@ namespace CishCompiler
                 }
 
             }
-
             return tokens;
-
         }
         static Token GetToken(ReadOnlyMemory<char> token, int lineNum, int tokenNum)
         {
@@ -62,9 +73,9 @@ namespace CishCompiler
             {
                 return new KeywordToken(token, lineNum, tokenNum);
             }
-            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.Operator]))
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.NonAssignmentOperator]))
             {
-                return new OperatorToken(token, lineNum, tokenNum);
+                return new NonAssignmentOperatorToken(token, lineNum, tokenNum);
             }
             else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.Value]))
             {
@@ -78,15 +89,40 @@ namespace CishCompiler
             {
                 return new ObjectToken(token, lineNum, tokenNum);
             }
-            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.Variable]))
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.Identifier]))
             {
-                return new VariableToken(token, lineNum, tokenNum);
+                return new IdentifierToken(token, lineNum, tokenNum);
             }
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.OpenParen]))
+            {
+                return new OpenParenToken(token, lineNum, tokenNum);
+            }
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.LineEndToken]))
+            {
+                return new LineEndToken(token, lineNum, tokenNum);
+            }           
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.CloseParen]))
+            {
+                return new CloseParenToken(token, lineNum, tokenNum);
+            }
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.AssignmentOperator]))
+            {
+                return new AssignmentOperatorToken(token, lineNum, tokenNum);
+            }
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.OpenCurly]))
+            {
+                return new OpenCurlyToken(token, lineNum, tokenNum);
+            }
+            else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.CloseCurly]))
+            {
+                return new CloseCurlyToken(token, lineNum, tokenNum);
+            }
+            // If no other token type matches, treat it as an error token
             else if (Token.IsRegexMatch(token.Span, possibleTokens[TokenType.Error]))
             {
                 return new ErrorToken(token, lineNum, tokenNum);
             }
-
+            //should NEVER hit
             throw new Exception($"Token {token} is not recognized as a valid token type.");
         }
     }

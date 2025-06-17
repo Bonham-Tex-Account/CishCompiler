@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CishCompiler.Tokens
 {
-    public class VariableToken : Token
+    public class IdentifierToken : Token
     {
-        public VariableToken(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        public IdentifierToken(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
 
