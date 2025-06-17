@@ -13,7 +13,7 @@ namespace CishCompiler.Tokens
         {
         }
 
-        public override string RegexPattern => throw new NotImplementedException("Get the Regex from GPT to be Lazy");//will be done later when I have decided all the keywords
+        public override string RegexPattern => throw new NotImplementedException("\\b(?:MAIN|IFELSE|IF|ELSE|FOR|RETURN|CLASS|VAR|BREAK|CONTINUE|GOTO|WHILE|THEN|INPUT|OUTPUT|FNC)\\b");
 
         
     }

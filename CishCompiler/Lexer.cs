@@ -27,7 +27,7 @@ namespace CishCompiler
         }
         static Dictionary<TokenType, string> possibleTokens = new Dictionary<TokenType, string>()
         {
-            { TokenType.Keyword,  "\\b(?:MAIN|IFELSE|IF|ELSE|FOR|RETURN|CLASS|VAR\\?|BREAK|CONTINUE|GOTO|WHILE|THEN|INPUT|OUTPUT|FNC)\\b"},
+            { TokenType.Keyword,  "\\b(?:MAIN|IFELSE|IF|ELSE|FOR|RETURN|CLASS|VAR|BREAK|CONTINUE|GOTO|WHILE|THEN|INPUT|OUTPUT|FNC)\\b"},
             { TokenType.Object, "\b[A-Z][a-z]*\b" },
             { TokenType.Function, "\\b[A-Z][a-z]*\\b\\(" },
             { TokenType.NonAssignmentOperator, "([!@*/><=+\\-&^])(?:=|\\1)?" },
