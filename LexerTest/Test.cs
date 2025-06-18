@@ -1,5 +1,4 @@
-
-using CishCompiler;
+using CishCompiler.Lexing;
 using CishCompiler.Tokens;
 
 namespace LexerTest

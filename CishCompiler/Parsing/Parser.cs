@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CishCompiler
+namespace CishCompiler.Parsing
 {
     public class Parser
     {
