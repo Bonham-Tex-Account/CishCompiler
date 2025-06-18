@@ -4,23 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static CishCompiler.Lexer;
 
 namespace CishCompiler.Tokens
 {
-    public abstract class Token
+    public  class Token
     {
         public ReadOnlyMemory<char> Value { get; private set; } // convert to span if needed for performance
         public int LineNumber { get; private set; }
         public int TokenNumber { get; private set; }
 
-        public abstract string RegexPattern { get; }
+        public TokenType tokenType { get; private set; }
 
 
-        public Token( ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public Token( ReadOnlyMemory<char> value, int lineNumber, int tokenNumber,TokenType tokenType)
         {
             Value = value;
             LineNumber = lineNumber;
             TokenNumber = tokenNumber;
+            this.tokenType = tokenType;
         }
         public static bool IsRegexMatch(ReadOnlySpan<char> input,string regexPattern)
         {
