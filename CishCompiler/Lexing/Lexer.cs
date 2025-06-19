@@ -1,127 +1,78 @@
-﻿using CishCompiler.Tokens;
+﻿using CishCompiler.Nodes;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CishCompiler.Lexing
 {
-    public class Lexer
+    public partial class Lexer
     {
-        public enum TokenType
+        static Dictionary<string, Func<int, int, ReadOnlyMemory<char>, INode>> possibleTokens = new Dictionary<string, Func<int, int, ReadOnlyMemory<char>, INode>>()
         {
-            MAINKeyword,
-            IFKeyword,
-            IFELSEKeyword,
-            ELSEKeyword,
-            FORKeyword,
-            RETURNKeyword,
-            CLASSKeyword,
-            VARKeyword,
-            BREAKKeyword,
-            CONTINUEKeyword,
-            GOTOKeyword,
-            WHILEKeyword,
-            INPUTKeyword,
-            OUTPUTKeyword,
-            FNCKeyword,
-            PlusOperator,
-            MinusOperator,
-            DivideOperator,
-            MultiplyOperator,
-            AndOperator,
-            OrOperator,
-            NotOperator,
-            PlusAssignmentOperator,
-            MinusAssignmentOperator,
-            DivideAssignmentOperator,
-            MultiplyAssignmentOperator,
-            AndAssignmentOperator,
-            OrAssignmentOperator,
-            EqualOperator,
-            NotEqualOperator,
-            GreaterThanOperator,
-            LessThanOperator,
-            GreaterThanOrEqualOperator,
-            LessThanOrEqualOperator,
-            AndAndOperator,
-            OrOrOperator,
-            Function,
-            Object,
-            Identifier,
-            LineEndToken,
-            OpenParen,
-            CloseParen,
-            AssignmentOperator,
-            OpenCurly,
-            CloseCurly,
-            Comment,
-            Comma,
-            StringLiteral,
-            NumbersLiteral,
-            Space,
-            Error
-        }
-        static Dictionary<TokenType, string> possibleTokens = new Dictionary<TokenType, string>()
-        {
-            {TokenType.MAINKeyword, "\\bMAIN\\b" },
-            { TokenType.IFKeyword, "\\bIF\\b" },
-            { TokenType.IFELSEKeyword, "\\bIFELSE\\b" },
-            { TokenType.ELSEKeyword, "\\bELSE\\b" },
-            { TokenType.FORKeyword, "\\bFOR\\b" },
-            { TokenType.RETURNKeyword, "\\bRETURN\\b" },
-            { TokenType.CLASSKeyword, "\\bCLASS\\b" },
-            { TokenType.VARKeyword, "\\bVAR\\b" },
-            { TokenType.BREAKKeyword, "\\bBREAK\\b" },
-            { TokenType.CONTINUEKeyword, "\\bCONTINUE\\b" },
-            { TokenType.GOTOKeyword, "\\bGOTO\\b" },
-            { TokenType.WHILEKeyword, "\\bWHILE\\b" },
-            { TokenType.INPUTKeyword, "\\bINPUT\\b" },
-            { TokenType.OUTPUTKeyword, "\\bOUTPUT\\b" },
-            { TokenType.FNCKeyword, "\\bFNC\\b" },
-            { TokenType.Object, "\b[A-Z][a-z]*\b" },
-            { TokenType.Space, "\b[ ]\b" },
-            { TokenType.Function, "\\b[A-Z][a-z]*\\b\\(" },
-            { TokenType.PlusOperator, "\b+\b" },
-            { TokenType.MinusOperator, "\b-\b" },
-            { TokenType.DivideOperator, "\b/\b" },
-            { TokenType.MultiplyOperator, "\b*\b" },
-            { TokenType.AndOperator, "\b&\b" },
-            { TokenType.OrOperator, "\b\\|\\|\b" },
-            { TokenType.NotOperator, "\b!\b" },
-            { TokenType.PlusAssignmentOperator, "\b\\+=\b" },
-            { TokenType.MinusAssignmentOperator, "\b-=\b" },
-            { TokenType.DivideAssignmentOperator, "\b/=\b" },
-            { TokenType.MultiplyAssignmentOperator, "\b\\*=\b" },
-            { TokenType.AndAssignmentOperator, "\b&=\b" },
-            { TokenType.OrAssignmentOperator, "\b\\|=\b" },
-            { TokenType.EqualOperator, "\b==\b" },
-            { TokenType.NotEqualOperator, "\b!=\b" },
-            { TokenType.GreaterThanOperator, "\b>\b" },
-            { TokenType.LessThanOperator, "\b<\b" },
-            { TokenType.GreaterThanOrEqualOperator, "\b>=\b" },
-            { TokenType.LessThanOrEqualOperator, "\b<=\b" },
-            { TokenType.NumbersLiteral, "\\d+(\\.\\d+)?" },
-            { TokenType.AndAndOperator, "\b&&\b" },
-            { TokenType.OrOrOperator, "\b\\|\\|\b" },
-            { TokenType.Comma, "\b,\b" },
-            { TokenType.Comment, "//.*" },
-            { TokenType.StringLiteral, "[^\"]*" },
-            { TokenType.Identifier,  "^[a-z.]+$" },
-            { TokenType.OpenParen,"\b\\(\b"},
-            { TokenType.LineEndToken,"\b;\b"},
-            { TokenType.CloseParen, "\b\\)\b" },
-            { TokenType.AssignmentOperator, "\b=\b" },
-            { TokenType.OpenCurly, "\b{\b" },
-            { TokenType.CloseCurly, "\b}\b" },
-            { TokenType.Error, ".+" }
+            ["\\bMAIN\\b"] = (LineNumber, TokenNumber, Value) => new MAINKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bIF\\b"]= (LineNumber, TokenNumber, Value) => new IFKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bIFELSE\\b"] = (LineNumber, TokenNumber, Value) => new IFELSEKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bELSE\\b"] = (LineNumber, TokenNumber, Value) => new ELSEKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bFOR\\b"] = (LineNumber, TokenNumber, Value) => new FORKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bRETURN\\b"] = (LineNumber, TokenNumber, Value) => new RETURNKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bCLASS\\b"] = (LineNumber, TokenNumber, Value) => new CLASSKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bVAR\\b"] = (LineNumber, TokenNumber, Value) => new VARKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bBREAK\\b"] = (LineNumber, TokenNumber, Value) => new BREAKKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bCONTINUE\\b"] = (LineNumber, TokenNumber, Value) => new CONTINUEKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bGOTO\\b"] = (LineNumber, TokenNumber, Value) => new GOTOKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bWHILE\\b"] = (LineNumber, TokenNumber, Value) => new WHILEKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bINPUT\\b"] = (LineNumber, TokenNumber, Value) => new INPUTKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bOUTPUT\\b"] = (LineNumber, TokenNumber, Value) => new OUTPUTKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\bFNC\\b"] = (LineNumber, TokenNumber, Value) => new FNCKeyWordNode(Value, LineNumber, TokenNumber),
+            ["\\b[A-Z][a-z]*\\b"] = (LineNumber, TokenNumber, Value) => new ObjectNode(Value, LineNumber, TokenNumber),
+            ["\\b[ ]\\b"] = (LineNumber, TokenNumber, Value) => new SpaceNode(Value, LineNumber, TokenNumber),
+            ["\\b[A-Z][a-z]*\\b\\("] = (LineNumber, TokenNumber, Value) => new FunctionNode(Value, LineNumber, TokenNumber),
+            ["\\+"] = (LineNumber, TokenNumber, Value) => new PlusOperatorNode(Value, LineNumber, TokenNumber),
+            ["-"] = (LineNumber, TokenNumber, Value) => new MinusOperatorNode(Value, LineNumber, TokenNumber),
+            ["/"] = (LineNumber, TokenNumber, Value) => new DivideOperatorNode(Value, LineNumber, TokenNumber),
+            ["\\*"] = (LineNumber, TokenNumber, Value) => new MultiplyOperatorNode(Value, LineNumber, TokenNumber),
+            ["&"] = (LineNumber, TokenNumber, Value) => new AndOperatorNode(Value, LineNumber, TokenNumber),
+            ["\\|"] = (LineNumber, TokenNumber, Value) => new OrOperatorNode(Value, LineNumber, TokenNumber),
+            ["!"] = (LineNumber, TokenNumber, Value) => new NotOperatorNode(Value, LineNumber, TokenNumber),
+            ["\\+="] = (LineNumber, TokenNumber, Value) => new PlusAssignmentOperatorNode(Value, LineNumber, TokenNumber),
+            ["-="] = (LineNumber, TokenNumber, Value) => new MinusAssignmentOperatorNode(Value, LineNumber, TokenNumber),
+            ["/="] = (LineNumber, TokenNumber, Value) => new DivideAssignmentOperatorNode(Value, LineNumber, TokenNumber),
+            ["\\*="] = (LineNumber, TokenNumber, Value) => new MultiplyAssignmentOperatorNode(Value, LineNumber, TokenNumber),
+            ["&="] = (LineNumber, TokenNumber, Value) => new AndAssignmentOperatorNode(Value, LineNumber,TokenNumber),
+            ["\\|="] = (LineNumber, TokenNum,value) => new OrAssignmentOperatorNode(value,LineNumber,TokenNum),
+            ["=="] = (LineNumber, TokenNumber, Value) => new EqualOperatorNode(Value, LineNumber, TokenNumber),
+            ["!="] = (LineNumber, TokenNumber, Value) => new NotEqualOperatorNode(Value, LineNumber, TokenNumber),
+            [">"] = (LineNumber, TokenNumber, Value) => new GreaterThanOperatorNode(Value, LineNumber, TokenNumber),
+            ["<"] = (LineNumber, TokenNumber, Value) => new LessThanOperatorNode(Value, LineNumber, TokenNumber),
+            [">="] = (LineNumber, TokenNumber, Value) => new GreaterThanOrEqualOperatorNode(Value, LineNumber, TokenNumber),
+            ["<="] = (LineNumber, TokenNumber, Value) => new LessThanOrEqualOperatorNode(Value, LineNumber, TokenNumber),
+            ["\\d+(\\.\\d+)?"] = (LineNumber, TokenNumber, Value) => new NumberLiteralNode(Value, LineNumber, TokenNumber),
+            ["&&"] = (LineNumber, TokenNumber, Value) => new AndAndOperatorNode(Value, LineNumber, TokenNumber),
+            ["\\|\\|"] = (LineNumber, TokenNumber, Value) => new OrOrOperatorNode(Value, LineNumber, TokenNumber),
+            [","] = (LineNumber, TokenNumber, Value) => new CommaNode(Value, LineNumber, TokenNumber),
+            ["//.*"] = (LineNumber, TokenNumber, Value) => new CommentNode(Value, LineNumber, TokenNumber),
+            ["\"[^\"]*\""] = (LineNumber, TokenNumber, Value) => new StringLiteralNode(Value, LineNumber, TokenNumber),
+            ["^[a-z.]+$"] = (LineNumber, TokenNumber, Value) => new IdentifierNode(Value, LineNumber, TokenNumber),
+            ["\\("] = (LineNumber, TokenNumber, Value) => new OpenParenthesisNode(Value, LineNumber, TokenNumber),
+            [";"] = (LineNumber, TokenNumber, Value) => new EndLineNode(Value, LineNumber, TokenNumber),
+            ["\\)"] = (LineNumber, TokenNumber, Value) => new CloseParenthesisNode(Value, LineNumber, TokenNumber),
+            ["="] = (LineNumber, TokenNumber, Value) => new AssignmentOperatorNode(Value, LineNumber, TokenNumber),
+            ["{"] = (LineNumber, TokenNumber, Value) => new OpenBraceNode(Value, LineNumber, TokenNumber),
+            ["}"] = (LineNumber, TokenNumber, Value) => new CloseBraceNode(Value, LineNumber, TokenNumber),
+            [".+"] = (LineNumber, TokenNumber, Value) => new ErrorNode(Value, LineNumber, TokenNumber)
+
+
+           
 
         };
-        public static List<Token> TokenizeInputCode(string[] codeLines)
+        public static List<INode> TokenizeInputCode(string[] codeLines)
         {
             StringBuilder currToken = new StringBuilder();
-            List<Token> tokens = new List<Token>();
+            List<INode> tokens = new List<INode>();
             int tokenNum = 0;
             for (int i = 0; i < codeLines.Length; i++)
             {
@@ -133,7 +84,7 @@ namespace CishCompiler.Lexing
                         tokens.Add(GetToken(currToken.ToString().AsMemory(), i, tokenNum));
                         currToken.Clear();
                         tokenNum += 2;
-                        tokens.Add(new Token(" ".AsMemory(), i, tokenNum, TokenType.Space)); // Add space token
+                        tokens.Add(new SpaceNode(" ".AsMemory(), i, tokenNum));
                     }
                     else
                     {
@@ -147,13 +98,13 @@ namespace CishCompiler.Lexing
             }
             return tokens;
         }
-        static Token GetToken(ReadOnlyMemory<char> token, int lineNum, int tokenNum)
+        static INode GetToken(ReadOnlyMemory<char> token, int lineNum, int tokenNum)
         {
             foreach (var possibleToken in possibleTokens)
             {
-                if (Token.IsRegexMatch(token.Span, possibleToken.Value))
+                if (Regex.IsMatch(token.Span, possibleToken.Key))
                 {
-                    return new Token(token, lineNum, tokenNum, possibleToken.Key);
+                   return possibleToken.Value(lineNum, tokenNum, token);
                 }
             }
             throw new Exception($"Token {token} is not recognized as a valid token type.");
