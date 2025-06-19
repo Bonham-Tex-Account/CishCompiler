@@ -1,1 +1,2 @@
 ﻿Int a = 10 ;
+Int b = a + 5a ;
