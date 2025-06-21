@@ -1,30 +1,41 @@
 ﻿namespace CishCompiler.Nodes
 {
-    public interface IValueNode : ITerminalNode
+    public class IValueNode : ITokenNode
     {
+        public IValueNode() : base()
+        {
+        }
+
+        public IValueNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class NumberLiteralNode : IValueNode
     {
+        public NumberLiteralNode() : base()
+        {
+        }
+
         public NumberLiteralNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
         {
             Value = value;
             LineNumber = lineNumber;
             TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        
     }
     public class StringLiteralNode : IValueNode
     {
+        public StringLiteralNode() : base()
+        {
+        }
+
         public StringLiteralNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
         {
             Value = value;
             LineNumber = lineNumber;
             TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+       
     }
 }

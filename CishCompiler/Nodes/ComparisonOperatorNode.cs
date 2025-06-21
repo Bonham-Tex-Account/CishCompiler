@@ -10,104 +10,91 @@
             AndAndOperator,
             OrOrOperator,
     */
-    public interface IComparisonOperatorNode : ITerminalNode
+    public class IComparisonOperatorNode : ITokenNode
     {
+        public IComparisonOperatorNode() : base()
+        {
+        }
+        public IComparisonOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class EqualOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public EqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public EqualOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        
+        public EqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class NotEqualOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public NotEqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public NotEqualOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
+        }
+        public NotEqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
         }
     }
     public class GreaterThanOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public GreaterThanOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public GreaterThanOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
+        }
+
+        public GreaterThanOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
         }
     }
     public class LessThanOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public LessThanOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public LessThanOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
+        }
+
+        public LessThanOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
         }
     }
     public class GreaterThanOrEqualOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public GreaterThanOrEqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public GreaterThanOrEqualOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
+        }
+
+        public GreaterThanOrEqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
         }
     }
     public class LessThanOrEqualOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public LessThanOrEqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public LessThanOrEqualOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
+        }
+
+        public LessThanOrEqualOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
         }
     }
     public class AndAndOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public AndAndOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public AndAndOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
+        }
+
+        public AndAndOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
         }
     }
     public class OrOrOperatorNode : IComparisonOperatorNode
     {
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public OrOrOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public OrOrOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
+        }
+
+        public OrOrOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
         }
     }
 }

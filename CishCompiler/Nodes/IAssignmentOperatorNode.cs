@@ -1,91 +1,82 @@
 ﻿namespace CishCompiler.Nodes
 {
-    public interface IAssignmentOperatorNode : ITerminalNode
+    public class IAssignmentOperatorNode : ITokenNode
     {
+        public IAssignmentOperatorNode(): base()       
+        {
+        }
+        public IAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class AssignmentOperatorNode : IAssignmentOperatorNode
     {
-        public AssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public AssignmentOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public AssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class PlusAssignmentOperatorNode : IAssignmentOperatorNode
     {
-        public PlusAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public PlusAssignmentOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public PlusAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class MinusAssignmentOperatorNode : IAssignmentOperatorNode
     {
-        public MinusAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public MinusAssignmentOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public MinusAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class DivideAssignmentOperatorNode : IAssignmentOperatorNode
     {
-        public DivideAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public DivideAssignmentOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public DivideAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class MultiplyAssignmentOperatorNode : IAssignmentOperatorNode
     {
-        public MultiplyAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public MultiplyAssignmentOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public MultiplyAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class AndAssignmentOperatorNode : IAssignmentOperatorNode
     {
-        public AndAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public AndAssignmentOperatorNode():base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public AndAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class OrAssignmentOperatorNode : IAssignmentOperatorNode
     {
-        public OrAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public OrAssignmentOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public OrAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
 
 }

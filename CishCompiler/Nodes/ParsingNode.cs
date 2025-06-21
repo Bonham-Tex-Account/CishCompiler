@@ -3,15 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CishCompiler.Nodes
 {
-      
-    public interface ITerminalNode : INode
-    {       
+    public abstract class IParsingNode
+    {  
     }
-    public interface INonTerminalNode 
+   
+    public abstract class INonTerminalNode : IParsingNode
     {
-    }
+        public List<IParsingNode> Children { get; set; }
 
+        public INonTerminalNode()
+        {
+            Children = new List<IParsingNode>();
+        }
+    }
+    public class Expression : INonTerminalNode
+    {
+        
+    }
+    public class ValueExpression : INonTerminalNode
+    {
+        
+    }
+    public class NoEXValueExpression : INonTerminalNode
+    {
+        
+    }
 }

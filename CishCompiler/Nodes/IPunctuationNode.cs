@@ -6,104 +6,97 @@ using System.Threading.Tasks;
 
 namespace CishCompiler.Nodes
 {
-    public interface IPunctuationNode : ITerminalNode
+    public class IPunctuationNode : ITokenNode
     {
-    }
-    public class SpaceNode : ITerminalNode
-    {
-        public SpaceNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public IPunctuationNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public IPunctuationNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
+    }
+    public class SpaceNode : IPunctuationNode
+    {
+        public SpaceNode() : base()
+        {
+        }
+
+        public SpaceNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class CommaNode : IPunctuationNode
     {
-        public CommaNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public CommaNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public CommaNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class EndLineNode : IPunctuationNode
     {
-        public EndLineNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        
+
+        public EndLineNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public EndLineNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class OpenParenthesisNode : IPunctuationNode
     {
-        public OpenParenthesisNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public OpenParenthesisNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public OpenParenthesisNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class CloseParenthesisNode : IPunctuationNode
     {
-        public CloseParenthesisNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public CloseParenthesisNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public CloseParenthesisNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class OpenBraceNode : IPunctuationNode
     {
-        public OpenBraceNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public OpenBraceNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public OpenBraceNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class CloseBraceNode : IPunctuationNode
     {
-        public CloseBraceNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public CloseBraceNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public CloseBraceNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
-    public class  CommentNode:IPunctuationNode
+    public class CommentNode : IPunctuationNode
     {
-        public CommentNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public CommentNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public CommentNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
 
 }

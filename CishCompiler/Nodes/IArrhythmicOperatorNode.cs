@@ -1,92 +1,82 @@
-﻿namespace CishCompiler.Nodes
+﻿
+namespace CishCompiler.Nodes
 {
-    public interface IArrhythmicOperatorNode : ITerminalNode
+    public class IArrhythmicOperatorNode : ITokenNode
     {
+        public IArrhythmicOperatorNode() : base()
+        {
+        }
+
+        public IArrhythmicOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class PlusOperatorNode : IArrhythmicOperatorNode
     {
-        public PlusOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public PlusOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-      
+
+        public PlusOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class MinusOperatorNode : IArrhythmicOperatorNode
     {
-        public MinusOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public MinusOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public MinusOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class DivideOperatorNode : IArrhythmicOperatorNode
     {
-        public DivideOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public DivideOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public DivideOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class MultiplyOperatorNode : IArrhythmicOperatorNode
     {
-        public MultiplyOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public MultiplyOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public MultiplyOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class AndOperatorNode : IArrhythmicOperatorNode
     {
-        public AndOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public AndOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public AndOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class OrOperatorNode : IArrhythmicOperatorNode
     {
-        public OrOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public OrOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public OrOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class NotOperatorNode : IArrhythmicOperatorNode
     {
-        public NotOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public NotOperatorNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public NotOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
-   
+
 }

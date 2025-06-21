@@ -1,52 +1,44 @@
-﻿namespace CishCompiler.Nodes
+﻿
+namespace CishCompiler.Nodes
 {
-    public class IdentifierNode : ITerminalNode
+    public class IdentifierNode : ITokenNode
     {
-        public IdentifierNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public IdentifierNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-    }
-    public class ObjectNode : ITerminalNode
-    {
-        public ObjectNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public IdentifierNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
     }
-    public class FunctionNode : ITerminalNode
+    public class ObjectNode : ITokenNode
     {
-        public FunctionNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public ObjectNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public ObjectNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
-    public class ErrorNode : ITerminalNode
+    public class FunctionNode : ITokenNode
     {
-        public ErrorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public FunctionNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
         }
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+
+        public FunctionNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
+    }
+    public class ErrorNode : ITokenNode
+    {
+        public ErrorNode() : base()
+        {
+        }
+
+        public ErrorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
 }

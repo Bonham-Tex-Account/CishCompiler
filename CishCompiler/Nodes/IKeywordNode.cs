@@ -1,4 +1,5 @@
 ﻿using CishCompiler.Lexing;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CishCompiler.Nodes
 {
@@ -19,221 +20,158 @@ namespace CishCompiler.Nodes
             OUTPUTKeyword,
             FNCKeyword,
     */
-    public interface IKeywordNode : ITerminalNode
+    public class IKeywordNode : ITokenNode
     {
+        public IKeywordNode() : base() { }
+        public IKeywordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class MAINKeyWordNode : IKeywordNode
     {
-        public MAINKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public MAINKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-          
         }
+        public MAINKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
-        public Lexer.TokenType tokenType { get; set; }
-
+        }
     }
 
     public class IFKeyWordNode : IKeywordNode
     {
-        public IFKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public IFKeyWordNode() : base() { }
+        public IFKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-            
+
         }
 
-        public ReadOnlyMemory<char> Value { get; set ; }
-        public int LineNumber { get ; set ; }
-        public int TokenNumber { get; set; }
-       
+        
     }
     public class IFELSEKeyWordNode : IKeywordNode
     {
-        public IFELSEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public IFELSEKeyWordNode() : base() { }
+
+        public IFELSEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
-
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
     }
     public class ELSEKeyWordNode : IKeywordNode
     {
-        public ELSEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public ELSEKeyWordNode() : base() { }
+
+        public ELSEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
-
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
     }
     public class FORKeyWordNode : IKeywordNode
     {
-        public FORKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public FORKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public FORKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class RETURNKeyWordNode : IKeywordNode
     {
-        public RETURNKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public RETURNKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public RETURNKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class CLASSKeyWordNode : IKeywordNode
     {
-        public CLASSKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public CLASSKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public CLASSKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class VARKeyWordNode : IKeywordNode
     {
-        public VARKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public VARKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public VARKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class BREAKKeyWordNode : IKeywordNode
     {
-        public BREAKKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public BREAKKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public BREAKKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class CONTINUEKeyWordNode : IKeywordNode
     {
-        public CONTINUEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public CONTINUEKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public CONTINUEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class GOTOKeyWordNode : IKeywordNode
     {
-        public GOTOKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public GOTOKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public GOTOKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class WHILEKeyWordNode : IKeywordNode
     {
-        public WHILEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public WHILEKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public WHILEKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class INPUTKeyWordNode : IKeywordNode
     {
-        public INPUTKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public INPUTKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public INPUTKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class OUTPUTKeyWordNode : IKeywordNode
     {
-        public OUTPUTKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public OUTPUTKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public OUTPUTKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
     public class FNCKeyWordNode : IKeywordNode
     {
-        public FNCKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber)
+        public FNCKeyWordNode() : base()
         {
-            Value = value;
-            LineNumber = lineNumber;
-            TokenNumber = tokenNumber;
-
         }
 
-        public ReadOnlyMemory<char> Value { get; set; }
-        public int LineNumber { get; set; }
-        public int TokenNumber { get; set; }
+        public FNCKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
     }
 }

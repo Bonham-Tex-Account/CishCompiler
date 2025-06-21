@@ -11,7 +11,7 @@ namespace CishCompiler.Lexing
 {
     public partial class Lexer
     {
-        static Dictionary<string, Func<int, int, ReadOnlyMemory<char>, INode>> possibleTokens = new Dictionary<string, Func<int, int, ReadOnlyMemory<char>, INode>>()
+        static Dictionary<string, Func<int, int, ReadOnlyMemory<char>, ITokenNode>> possibleTokens = new Dictionary<string, Func<int, int, ReadOnlyMemory<char>, ITokenNode>>()
         {
             ["^MAIN$"] = (LineNumber, TokenNumber, Value) => new MAINKeyWordNode(Value, LineNumber, TokenNumber),
             ["^IF$"] = (LineNumber, TokenNumber, Value) => new IFKeyWordNode(Value, LineNumber, TokenNumber),
@@ -65,10 +65,10 @@ namespace CishCompiler.Lexing
             ["^}$"] = (LineNumber, TokenNumber, Value) => new CloseBraceNode(Value, LineNumber, TokenNumber),
             ["^.+$"] = (LineNumber, TokenNumber, Value) => new ErrorNode(Value, LineNumber, TokenNumber)
         };
-        public static List<INode> TokenizeInputCode(string[] codeLines)
+        public static List<ITokenNode> TokenizeInputCode(string[] codeLines)
         {
             StringBuilder currToken = new StringBuilder();
-            List<INode> tokens = new List<INode>();
+            List<ITokenNode> tokens = new List<ITokenNode>();
             int tokenNum = 0;
             for (int i = 0; i < codeLines.Length; i++)
             {
@@ -95,7 +95,7 @@ namespace CishCompiler.Lexing
             }
             return tokens;
         }
-        static INode GetToken(ReadOnlyMemory<char> token, int lineNum, int tokenNum)
+        static ITokenNode GetToken(ReadOnlyMemory<char> token, int lineNum, int tokenNum)
         {
             foreach (var possibleToken in possibleTokens)
             {
