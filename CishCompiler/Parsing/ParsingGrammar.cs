@@ -13,7 +13,9 @@ namespace CishCompiler.Parsing
         {
             [typeof(Expression)] = new List<List<Func<IParsingNode>>>
             {
-                new List<Func<IParsingNode>> { ()=>new ObjectNode(),  ()=>new IdentifierNode(),()=>new AssignmentOperatorNode(),()=>new ValueExpression(),()=>new EndLineNode()},
+                new List<Func<IParsingNode>> { ()=>new ObjectNode(), ()=>new IdentifierNode(), ()=>new AssignmentOperatorNode(), ()=>new ValueExpression(), ()=>new EndLineNode()},
+                new List<Func<IParsingNode>> { ()=>new IdentifierNode(), ()=>new AssignmentOperatorNode(), ()=>new ValueExpression(), ()=>new EndLineNode()}
+
 
             },
             [typeof(ValueExpression)] = new List<List<Func<IParsingNode>>>
@@ -29,7 +31,7 @@ namespace CishCompiler.Parsing
                 new List<Func<IParsingNode>> {()=> new IdentifierNode()},
                 new List<Func<IParsingNode>> {()=> new OpenParenthesisNode(),()=> new ValueExpression(),()=> new OpenParenthesisNode()},
             }
-            
+
         };
 
 

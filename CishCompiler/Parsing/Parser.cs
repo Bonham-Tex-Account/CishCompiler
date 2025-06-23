@@ -1,4 +1,5 @@
 ﻿using CishCompiler.Nodes;
+using CishCompiler.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,24 @@ namespace CishCompiler.Parsing
 {
     public class Parser
     {
-        public static  List<ParseTree> ParseTokens(List<ITokenNode> tokenList)
+        public static List<ParseTree> ParseTokens(List<ITokenNode> tokenList)
         {
-            throw new NotImplementedException("This method is not implemented yet. Please implement the parsing logic based on the grammar rules defined in ParsingGrammar.");
+            var tempList = new List<ParseTree>();
+            int currentLocation = 0;
+            while(currentLocation<tokenList.Count)
+            {
+                var tempTree = ParseSingleExpression(new Expression(), tokenList,currentLocation);
+                // will do error checking here
+                tempList.Add(new ParseTree(tempTree.lowerNode));
+                currentLocation += tempTree.changeInLocation;
+            }
+            
+
+            return tempList;
         }
-        static IParsingNode ParseSingleExpression(IParsingNode currNode,List<ITokenNode> tokenList,int currentLocation)
+        static (IParsingNode lowerNode, int changeInLocation) ParseSingleExpression(IParsingNode currNode, List<ITokenNode> tokenList, int currentLocation = 0)
         {
-            if(currNode is INonTerminalNode ntNode)
+            if (currNode is INonTerminalNode ntNode)
             {
                 var currNodeGrammar = ParsingGrammar.GrammarRules[currNode.GetType()];
                 foreach (var possGrammar in currNodeGrammar)
@@ -23,32 +35,40 @@ namespace CishCompiler.Parsing
                     var tempChildren = new List<IParsingNode>();
                     foreach (var node in possGrammar)
                     {
-                        if (tokenList[currentLocation]is SpaceNode)
+                        if (tokenList[currentLocation] is SpaceNode)
                         {
                             currentLocation++;
-                            continue;
+
                         }
-                        var simplifiedNode = ParseSingleExpression(node.Invoke(), tokenList, currentLocation);
-                        if(simplifiedNode!=null)
+                        var nextState = ParseSingleExpression(node.Invoke(), tokenList, currentLocation);
+
+                        if (nextState.lowerNode != null)
                         {
-                           tempChildren.Add(simplifiedNode);
+                            tempChildren.Add(nextState.lowerNode);
+                            currentLocation = currentLocation += nextState.changeInLocation;
+
                         }
-                        else 
+                        else
                         {   // If any node in the grammar fails to parse, we skip this grammar rule
                             tempChildren.Clear();
                             break;
                         }
                     }
-                    if(tempChildren.Count == possGrammar.Count)
+                    if (tempChildren.Count == possGrammar.Count)
                     {
                         ntNode.Children = tempChildren;
-                        return ntNode; // Successfully parsed this grammar rule
+                        if(currNode is Expression)
+                        {
+                            return (ntNode, currentLocation);
+                        }
+                        return (ntNode, tempChildren.Count); // Successfully parsed this grammar rule
                     }
+                   
                 }
             }
-            if(currNode is ITokenNode tNode)
+            if (currNode is ITokenNode tNode)
             {
-                return tokenList[currentLocation];              
+                return (tokenList[currentLocation], 1);
             }
             throw new Exception("Invalid node type encountered during parsing.");
         }
@@ -57,5 +77,9 @@ namespace CishCompiler.Parsing
 }
 public class ParseTree
 {
-
+    public IParsingNode RootNode { get; set; }
+    public ParseTree(IParsingNode rootNode)
+    {
+        RootNode = rootNode;
+    }
 }
