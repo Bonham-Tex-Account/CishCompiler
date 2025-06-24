@@ -8,9 +8,9 @@ using System.Xml.Linq;
 namespace CishCompiler.Parsing
 {
     public abstract class IParsingNode
-    {  
+    {
     }
-   
+
     public abstract class INonTerminalNode : IParsingNode
     {
         public List<IParsingNode> Children { get; set; }
@@ -20,16 +20,23 @@ namespace CishCompiler.Parsing
             Children = new List<IParsingNode>();
         }
     }
+    public class RootNode : INonTerminalNode
+    {
+    }
     public class Expression : INonTerminalNode
     {
-        
+
     }
     public class ValueExpression : INonTerminalNode
     {
-        
+
     }
     public class NoEXValueExpression : INonTerminalNode
     {
-        
+
+    }
+    public class CompExpression : INonTerminalNode
+    {
+
     }
 }

@@ -14,6 +14,7 @@ namespace LexerTest
             var lexedNodes =Lexer.TokenizeInputCode(codeLines);
             ;
             var parseTrees= Parser.ParseTokens(lexedNodes);
+            ;
         }
        
     }

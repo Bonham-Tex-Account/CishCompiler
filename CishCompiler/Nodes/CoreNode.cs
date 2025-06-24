@@ -1,7 +1,7 @@
 ﻿
 namespace CishCompiler.Nodes
 {
-    public class IdentifierNode : ITokenNode
+    public class IdentifierNode : TokenNode
     {
         public IdentifierNode() : base()
         {
@@ -11,7 +11,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class ObjectNode : ITokenNode
+    public class ObjectNode : TokenNode
     {
         public ObjectNode() : base()
         {
@@ -21,7 +21,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class FunctionNode : ITokenNode
+    public class FunctionNode : TokenNode
     {
         public FunctionNode() : base()
         {
@@ -31,7 +31,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class ErrorNode : ITokenNode
+    public class ErrorNode : TokenNode
     {
         public ErrorNode() : base()
         {

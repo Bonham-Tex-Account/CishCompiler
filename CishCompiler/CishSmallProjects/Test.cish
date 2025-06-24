@@ -1,2 +1,2 @@
-﻿Int a = 10 ;
-Int b = a ;
+﻿Int a = 5 + 3 ;
+IF a == a { Int b = 10 ; }

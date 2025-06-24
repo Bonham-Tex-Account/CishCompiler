@@ -10,42 +10,49 @@ namespace CishCompiler.Parsing
 {
     public class Parser
     {
-        public static List<ParseTree> ParseTokens(List<ITokenNode> tokenList)
+        public static List<ParseTree> ParseTokens(List<TokenNode> tokenList)
         {
             var tempList = new List<ParseTree>();
             int currentLocation = 0;
-            while(currentLocation<tokenList.Count)
+            while (currentLocation < tokenList.Count)
             {
-                var tempTree = ParseSingleExpression(new Expression(), tokenList,currentLocation);
+                var tempTree = ParseSingleExpression(new Expression(), tokenList, currentLocation);
                 // will do error checking here
                 tempList.Add(new ParseTree(tempTree.lowerNode));
-                currentLocation += tempTree.changeInLocation;
+                currentLocation = (tempTree.changeInLocation);
             }
-            
+
 
             return tempList;
         }
-        static (IParsingNode lowerNode, int changeInLocation) ParseSingleExpression(IParsingNode currNode, List<ITokenNode> tokenList, int currentLocation = 0)
+        static (IParsingNode lowerNode, int changeInLocation) ParseSingleExpression(IParsingNode currNode, List<TokenNode> tokenList, int currentLocation = 0)
         {
             if (currNode is INonTerminalNode ntNode)
             {
                 var currNodeGrammar = ParsingGrammar.GrammarRules[currNode.GetType()];
-                foreach (var possGrammar in currNodeGrammar)
+                ;
+                
+
+                for (int currGrammar = 0; currGrammar < currNodeGrammar.Count; currGrammar++)
                 {
+                    //for each production
                     var tempChildren = new List<IParsingNode>();
-                    foreach (var node in possGrammar)
+                    int tempLocation = currentLocation
+                    ;
+                    for (int tokenInGrammar = 0; tokenInGrammar < currNodeGrammar[currGrammar].Count; tokenInGrammar++)
                     {
-                        if (tokenList[currentLocation] is SpaceNode)
+                        //for each node in production
+                        if (tokenList[tempLocation] is SpaceNode)
                         {
-                            currentLocation++;
+                            tempLocation++;
 
                         }
-                        var nextState = ParseSingleExpression(node.Invoke(), tokenList, currentLocation);
+                        var nextState = ParseSingleExpression(currNodeGrammar[currGrammar][tokenInGrammar].Invoke(), tokenList, tempLocation);
 
                         if (nextState.lowerNode != null)
                         {
                             tempChildren.Add(nextState.lowerNode);
-                            currentLocation = currentLocation += nextState.changeInLocation;
+                            tempLocation = nextState.changeInLocation;
 
                         }
                         else
@@ -54,23 +61,28 @@ namespace CishCompiler.Parsing
                             break;
                         }
                     }
-                    if (tempChildren.Count == possGrammar.Count)
+                    if (tempChildren.Count == currNodeGrammar[currGrammar].Count)
                     {
                         ntNode.Children = tempChildren;
-                        if(currNode is Expression)
+                        if (currNode is Expression)
                         {
-                            return (ntNode, currentLocation);
+                            return (ntNode, tempLocation);
                         }
-                        return (ntNode, tempChildren.Count); // Successfully parsed this grammar rule
+                        return (ntNode, tempLocation); // Successfully parsed this grammar rule
                     }
-                   
+
                 }
             }
-            if (currNode is ITokenNode tNode)
+            //correct node type 
+            if (currNode.GetType().IsAssignableFrom(tokenList[currentLocation].GetType()))
             {
-                return (tokenList[currentLocation], 1);
+                return (tokenList[currentLocation], currentLocation+1);
             }
-            throw new Exception("Invalid node type encountered during parsing.");
+            else
+            {
+                return (null, 0); // Failed to parse this node
+            }
+
         }
     }
 

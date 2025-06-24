@@ -11,7 +11,7 @@ namespace CishCompiler.Lexing
 {
     public partial class Lexer
     {
-        static Dictionary<string, Func<int, int, ReadOnlyMemory<char>, ITokenNode>> possibleTokens = new Dictionary<string, Func<int, int, ReadOnlyMemory<char>, ITokenNode>>()
+        static Dictionary<string, Func<int, int, ReadOnlyMemory<char>, TokenNode>> possibleTokens = new Dictionary<string, Func<int, int, ReadOnlyMemory<char>, TokenNode>>()
         {
             ["^MAIN$"] = (LineNumber, TokenNumber, Value) => new MAINKeyWordNode(Value, LineNumber, TokenNumber),
             ["^IF$"] = (LineNumber, TokenNumber, Value) => new IFKeyWordNode(Value, LineNumber, TokenNumber),
@@ -61,14 +61,14 @@ namespace CishCompiler.Lexing
             ["^;$"] = (LineNumber, TokenNumber, Value) => new EndLineNode(Value, LineNumber, TokenNumber),
             ["^\\)$"] = (LineNumber, TokenNumber, Value) => new CloseParenthesisNode(Value, LineNumber, TokenNumber),
             ["^=$"] = (LineNumber, TokenNumber, Value) => new AssignmentOperatorNode(Value, LineNumber, TokenNumber),
-            ["^{ $"] = (LineNumber, TokenNumber, Value) => new OpenBraceNode(Value, LineNumber, TokenNumber),
+            ["^{$"] = (LineNumber, TokenNumber, Value) => new OpenBraceNode(Value, LineNumber, TokenNumber),
             ["^}$"] = (LineNumber, TokenNumber, Value) => new CloseBraceNode(Value, LineNumber, TokenNumber),
             ["^.+$"] = (LineNumber, TokenNumber, Value) => new ErrorNode(Value, LineNumber, TokenNumber)
         };
-        public static List<ITokenNode> TokenizeInputCode(string[] codeLines)
+        public static List<TokenNode> TokenizeInputCode(string[] codeLines)
         {
             StringBuilder currToken = new StringBuilder();
-            List<ITokenNode> tokens = new List<ITokenNode>();
+            List<TokenNode> tokens = new List<TokenNode>();
             int tokenNum = 0;
             for (int i = 0; i < codeLines.Length; i++)
             {
@@ -95,7 +95,7 @@ namespace CishCompiler.Lexing
             }
             return tokens;
         }
-        static ITokenNode GetToken(ReadOnlyMemory<char> token, int lineNum, int tokenNum)
+        static TokenNode GetToken(ReadOnlyMemory<char> token, int lineNum, int tokenNum)
         {
             foreach (var possibleToken in possibleTokens)
             {

@@ -1,16 +1,16 @@
 ﻿namespace CishCompiler.Nodes
 {
-    public class IValueNode : ITokenNode
+    public class ValueNode : TokenNode
     {
-        public IValueNode() : base()
+        public ValueNode() : base()
         {
         }
 
-        public IValueNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        public ValueNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
     }
-    public class NumberLiteralNode : IValueNode
+    public class NumberLiteralNode : ValueNode
     {
         public NumberLiteralNode() : base()
         {
@@ -24,7 +24,7 @@
         }
         
     }
-    public class StringLiteralNode : IValueNode
+    public class StringLiteralNode : ValueNode
     {
         public StringLiteralNode() : base()
         {

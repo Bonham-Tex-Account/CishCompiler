@@ -1,15 +1,15 @@
 ﻿namespace CishCompiler.Nodes
 {
-    public class IAssignmentOperatorNode : ITokenNode
+    public class AssignmentNode : TokenNode
     {
-        public IAssignmentOperatorNode(): base()       
+        public AssignmentNode(): base()       
         {
         }
-        public IAssignmentOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        public AssignmentNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
     }
-    public class AssignmentOperatorNode : IAssignmentOperatorNode
+    public class AssignmentOperatorNode : AssignmentNode
     {
         public AssignmentOperatorNode() : base()
         {
@@ -19,7 +19,7 @@
         {
         }
     }
-    public class PlusAssignmentOperatorNode : IAssignmentOperatorNode
+    public class PlusAssignmentOperatorNode : AssignmentNode
     {
         public PlusAssignmentOperatorNode() : base()
         {
@@ -29,7 +29,7 @@
         {
         }
     }
-    public class MinusAssignmentOperatorNode : IAssignmentOperatorNode
+    public class MinusAssignmentOperatorNode : AssignmentNode
     {
         public MinusAssignmentOperatorNode() : base()
         {
@@ -39,7 +39,7 @@
         {
         }
     }
-    public class DivideAssignmentOperatorNode : IAssignmentOperatorNode
+    public class DivideAssignmentOperatorNode : AssignmentNode
     {
         public DivideAssignmentOperatorNode() : base()
         {
@@ -49,7 +49,7 @@
         {
         }
     }
-    public class MultiplyAssignmentOperatorNode : IAssignmentOperatorNode
+    public class MultiplyAssignmentOperatorNode : AssignmentNode
     {
         public MultiplyAssignmentOperatorNode() : base()
         {
@@ -59,7 +59,7 @@
         {
         }
     }
-    public class AndAssignmentOperatorNode : IAssignmentOperatorNode
+    public class AndAssignmentOperatorNode : AssignmentNode
     {
         public AndAssignmentOperatorNode():base()
         {
@@ -69,7 +69,7 @@
         {
         }
     }
-    public class OrAssignmentOperatorNode : IAssignmentOperatorNode
+    public class OrAssignmentOperatorNode : AssignmentNode
     {
         public OrAssignmentOperatorNode() : base()
         {

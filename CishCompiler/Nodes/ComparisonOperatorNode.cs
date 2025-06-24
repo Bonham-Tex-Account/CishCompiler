@@ -10,16 +10,16 @@
             AndAndOperator,
             OrOrOperator,
     */
-    public class IComparisonOperatorNode : ITokenNode
+    public class ComparisonOperatorNode : TokenNode
     {
-        public IComparisonOperatorNode() : base()
+        public ComparisonOperatorNode() : base()
         {
         }
-        public IComparisonOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        public ComparisonOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
     }
-    public class EqualOperatorNode : IComparisonOperatorNode
+    public class EqualOperatorNode : ComparisonOperatorNode
     {
         public EqualOperatorNode() : base()
         {
@@ -28,7 +28,7 @@
         {
         }
     }
-    public class NotEqualOperatorNode : IComparisonOperatorNode
+    public class NotEqualOperatorNode : ComparisonOperatorNode
     {
         public NotEqualOperatorNode() : base()
         {
@@ -37,7 +37,7 @@
         {
         }
     }
-    public class GreaterThanOperatorNode : IComparisonOperatorNode
+    public class GreaterThanOperatorNode : ComparisonOperatorNode
     {
         public GreaterThanOperatorNode() : base()
         {
@@ -47,7 +47,7 @@
         {
         }
     }
-    public class LessThanOperatorNode : IComparisonOperatorNode
+    public class LessThanOperatorNode : ComparisonOperatorNode
     {
         public LessThanOperatorNode() : base()
         {
@@ -57,7 +57,7 @@
         {
         }
     }
-    public class GreaterThanOrEqualOperatorNode : IComparisonOperatorNode
+    public class GreaterThanOrEqualOperatorNode : ComparisonOperatorNode
     {
         public GreaterThanOrEqualOperatorNode() : base()
         {
@@ -67,7 +67,7 @@
         {
         }
     }
-    public class LessThanOrEqualOperatorNode : IComparisonOperatorNode
+    public class LessThanOrEqualOperatorNode : ComparisonOperatorNode
     {
         public LessThanOrEqualOperatorNode() : base()
         {
@@ -77,7 +77,7 @@
         {
         }
     }
-    public class AndAndOperatorNode : IComparisonOperatorNode
+    public class AndAndOperatorNode : ComparisonOperatorNode
     {
         public AndAndOperatorNode() : base()
         {
@@ -87,7 +87,7 @@
         {
         }
     }
-    public class OrOrOperatorNode : IComparisonOperatorNode
+    public class OrOrOperatorNode : ComparisonOperatorNode
     {
         public OrOrOperatorNode() : base()
         {

@@ -1,17 +1,17 @@
 ﻿
 namespace CishCompiler.Nodes
 {
-    public class IArrhythmicOperatorNode : ITokenNode
+    public class ArrhythmicOperatorNode : TokenNode
     {
-        public IArrhythmicOperatorNode() : base()
+        public ArrhythmicOperatorNode() : base()
         {
         }
 
-        public IArrhythmicOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        public ArrhythmicOperatorNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
     }
-    public class PlusOperatorNode : IArrhythmicOperatorNode
+    public class PlusOperatorNode : ArrhythmicOperatorNode
     {
         public PlusOperatorNode() : base()
         {
@@ -21,7 +21,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class MinusOperatorNode : IArrhythmicOperatorNode
+    public class MinusOperatorNode : ArrhythmicOperatorNode
     {
         public MinusOperatorNode() : base()
         {
@@ -31,7 +31,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class DivideOperatorNode : IArrhythmicOperatorNode
+    public class DivideOperatorNode : ArrhythmicOperatorNode
     {
         public DivideOperatorNode() : base()
         {
@@ -41,7 +41,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class MultiplyOperatorNode : IArrhythmicOperatorNode
+    public class MultiplyOperatorNode : ArrhythmicOperatorNode
     {
         public MultiplyOperatorNode() : base()
         {
@@ -50,7 +50,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class AndOperatorNode : IArrhythmicOperatorNode
+    public class AndOperatorNode : ArrhythmicOperatorNode
     {
         public AndOperatorNode() : base()
         {
@@ -60,7 +60,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class OrOperatorNode : IArrhythmicOperatorNode
+    public class OrOperatorNode : ArrhythmicOperatorNode
     {
         public OrOperatorNode() : base()
         {
@@ -69,7 +69,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class NotOperatorNode : IArrhythmicOperatorNode
+    public class NotOperatorNode : ArrhythmicOperatorNode
     {
         public NotOperatorNode() : base()
         {

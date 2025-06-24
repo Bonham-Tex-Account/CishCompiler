@@ -20,14 +20,14 @@ namespace CishCompiler.Nodes
             OUTPUTKeyword,
             FNCKeyword,
     */
-    public class IKeywordNode : ITokenNode
+    public class KeywordNode : TokenNode
     {
-        public IKeywordNode() : base() { }
-        public IKeywordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        public KeywordNode() : base() { }
+        public KeywordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
     }
-    public class MAINKeyWordNode : IKeywordNode
+    public class MAINKeyWordNode : KeywordNode
     {
         public MAINKeyWordNode() : base()
         {
@@ -38,7 +38,7 @@ namespace CishCompiler.Nodes
         }
     }
 
-    public class IFKeyWordNode : IKeywordNode
+    public class IFKeyWordNode : KeywordNode
     {
         public IFKeyWordNode() : base() { }
         public IFKeyWordNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
@@ -48,7 +48,7 @@ namespace CishCompiler.Nodes
 
         
     }
-    public class IFELSEKeyWordNode : IKeywordNode
+    public class IFELSEKeyWordNode : KeywordNode
     {
         public IFELSEKeyWordNode() : base() { }
 
@@ -56,7 +56,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class ELSEKeyWordNode : IKeywordNode
+    public class ELSEKeyWordNode : KeywordNode
     {
         public ELSEKeyWordNode() : base() { }
 
@@ -64,7 +64,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class FORKeyWordNode : IKeywordNode
+    public class FORKeyWordNode : KeywordNode
     {
         public FORKeyWordNode() : base()
         {
@@ -74,7 +74,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class RETURNKeyWordNode : IKeywordNode
+    public class RETURNKeyWordNode : KeywordNode
     {
         public RETURNKeyWordNode() : base()
         {
@@ -84,7 +84,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class CLASSKeyWordNode : IKeywordNode
+    public class CLASSKeyWordNode : KeywordNode
     {
         public CLASSKeyWordNode() : base()
         {
@@ -94,7 +94,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class VARKeyWordNode : IKeywordNode
+    public class VARKeyWordNode : KeywordNode
     {
         public VARKeyWordNode() : base()
         {
@@ -104,7 +104,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class BREAKKeyWordNode : IKeywordNode
+    public class BREAKKeyWordNode : KeywordNode
     {
         public BREAKKeyWordNode() : base()
         {
@@ -114,7 +114,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class CONTINUEKeyWordNode : IKeywordNode
+    public class CONTINUEKeyWordNode : KeywordNode
     {
         public CONTINUEKeyWordNode() : base()
         {
@@ -124,7 +124,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class GOTOKeyWordNode : IKeywordNode
+    public class GOTOKeyWordNode : KeywordNode
     {
         public GOTOKeyWordNode() : base()
         {
@@ -134,7 +134,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class WHILEKeyWordNode : IKeywordNode
+    public class WHILEKeyWordNode : KeywordNode
     {
         public WHILEKeyWordNode() : base()
         {
@@ -144,7 +144,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class INPUTKeyWordNode : IKeywordNode
+    public class INPUTKeyWordNode : KeywordNode
     {
         public INPUTKeyWordNode() : base()
         {
@@ -154,7 +154,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class OUTPUTKeyWordNode : IKeywordNode
+    public class OUTPUTKeyWordNode : KeywordNode
     {
         public OUTPUTKeyWordNode() : base()
         {
@@ -164,7 +164,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class FNCKeyWordNode : IKeywordNode
+    public class FNCKeyWordNode : KeywordNode
     {
         public FNCKeyWordNode() : base()
         {

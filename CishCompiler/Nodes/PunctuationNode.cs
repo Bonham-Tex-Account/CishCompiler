@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace CishCompiler.Nodes
 {
-    public class IPunctuationNode : ITokenNode
+    public class PunctuationNode : TokenNode
     {
-        public IPunctuationNode() : base()
+        public PunctuationNode() : base()
         {
         }
 
-        public IPunctuationNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        public PunctuationNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
         {
         }
     }
-    public class SpaceNode : IPunctuationNode
+    public class SpaceNode : PunctuationNode
     {
         public SpaceNode() : base()
         {
@@ -26,7 +26,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class CommaNode : IPunctuationNode
+    public class CommaNode : PunctuationNode
     {
         public CommaNode() : base()
         {
@@ -36,7 +36,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class EndLineNode : IPunctuationNode
+    public class EndLineNode : PunctuationNode
     {
         
 
@@ -48,7 +48,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class OpenParenthesisNode : IPunctuationNode
+    public class OpenParenthesisNode : PunctuationNode
     {
         public OpenParenthesisNode() : base()
         {
@@ -58,7 +58,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class CloseParenthesisNode : IPunctuationNode
+    public class CloseParenthesisNode : PunctuationNode
     {
         public CloseParenthesisNode() : base()
         {
@@ -68,7 +68,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class OpenBraceNode : IPunctuationNode
+    public class OpenBraceNode : PunctuationNode
     {
         public OpenBraceNode() : base()
         {
@@ -78,7 +78,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class CloseBraceNode : IPunctuationNode
+    public class CloseBraceNode : PunctuationNode
     {
         public CloseBraceNode() : base()
         {
@@ -88,7 +88,7 @@ namespace CishCompiler.Nodes
         {
         }
     }
-    public class CommentNode : IPunctuationNode
+    public class CommentNode : PunctuationNode
     {
         public CommentNode() : base()
         {
