@@ -10,22 +10,22 @@ namespace CishCompiler.Parsing
 {
     public class Parser
     {
-        public static List<ParseTree> ParseTokens(List<TokenNode> tokenList)
+        public static ParseTree ParseTokens(List<TokenNode> tokenList)
         {
-            var tempList = new List<ParseTree>();
+            var tree = new ParseTree(new RootNode());
             int currentLocation = 0;
             while (currentLocation < tokenList.Count)
             {
                 var tempTree = ParseSingleExpression(new Expression(), tokenList, currentLocation);
                 // will do error checking here
-                tempList.Add(new ParseTree(tempTree.lowerNode));
+                tree.RootNode.Children.Add(tempTree.lowerNode);
                 currentLocation = (tempTree.changeInLocation);
             }
 
 
-            return tempList;
+            return tree;
         }
-        static (IParsingNode lowerNode, int changeInLocation) ParseSingleExpression(IParsingNode currNode, List<TokenNode> tokenList, int currentLocation = 0)
+        static (ParsingNode lowerNode, int changeInLocation) ParseSingleExpression(ParsingNode currNode, List<TokenNode> tokenList, int currentLocation = 0)
         {
             if (currNode is INonTerminalNode ntNode)
             {
@@ -36,7 +36,7 @@ namespace CishCompiler.Parsing
                 for (int currGrammar = 0; currGrammar < currNodeGrammar.Count; currGrammar++)
                 {
                     //for each production
-                    var tempChildren = new List<IParsingNode>();
+                    var tempChildren = new List<ParsingNode>();
                     int tempLocation = currentLocation
                     ;
                     for (int tokenInGrammar = 0; tokenInGrammar < currNodeGrammar[currGrammar].Count; tokenInGrammar++)
@@ -89,8 +89,8 @@ namespace CishCompiler.Parsing
 }
 public class ParseTree
 {
-    public IParsingNode RootNode { get; set; }
-    public ParseTree(IParsingNode rootNode)
+    public RootNode RootNode { get; set; }
+    public ParseTree(RootNode rootNode)
     {
         RootNode = rootNode;
     }

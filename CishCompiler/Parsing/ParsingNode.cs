@@ -7,17 +7,17 @@ using System.Xml.Linq;
 
 namespace CishCompiler.Parsing
 {
-    public abstract class IParsingNode
+    public abstract class ParsingNode
     {
     }
 
-    public abstract class INonTerminalNode : IParsingNode
+    public abstract class INonTerminalNode : ParsingNode
     {
-        public List<IParsingNode> Children { get; set; }
+        public List<ParsingNode> Children { get; set; }
 
         public INonTerminalNode()
         {
-            Children = new List<IParsingNode>();
+            Children = new List<ParsingNode>();
         }
     }
     public class RootNode : INonTerminalNode

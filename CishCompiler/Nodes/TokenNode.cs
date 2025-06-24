@@ -9,7 +9,7 @@ using static CishCompiler.Lexing.Lexer;
 
 namespace CishCompiler.Nodes
 {
-    public abstract class  TokenNode:IParsingNode
+    public abstract class  TokenNode:ParsingNode
     {
         public ReadOnlyMemory<char> Value { get; set; }
         public int LineNumber { get; set; }
