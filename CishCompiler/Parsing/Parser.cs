@@ -1,5 +1,4 @@
 ﻿using CishCompiler.Nodes;
-using CishCompiler.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,12 +85,4 @@ namespace CishCompiler.Parsing
         }
     }
 
-}
-public class ParseTree
-{
-    public RootNode RootNode { get; set; }
-    public ParseTree(RootNode rootNode)
-    {
-        RootNode = rootNode;
-    }
 }
