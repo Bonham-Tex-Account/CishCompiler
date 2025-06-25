@@ -13,7 +13,7 @@ namespace LexerTest
             string[] codeLines = File.ReadAllLines("C:\\Users\\Tex\\Documents\\Visual Studio 2022\\Projects\\CishCompiler\\CishCompiler\\CishSmallProjects\\Test.cish");
             var lexedNodes =Lexer.TokenizeInputCode(codeLines);
             ;
-            var parseTrees= Parser.ParseTokens(lexedNodes);
+            Parser.ParseFile(lexedNodes)
             ;
         }
        

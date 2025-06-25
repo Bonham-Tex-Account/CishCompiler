@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CishCompiler.Nodes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,18 @@ namespace CishCompiler.Parsing
     public abstract class ParsingNode
     {
     }
-
+    public class ASTNode : TokenNode
+    {
+        public List<ASTNode> Children;
+        public ASTNode() : base()
+        {
+            Children = new List<ASTNode>();
+        }
+        public ASTNode(TokenNode node) : base(node.Value, node.LineNumber, node.TokenNumber)
+        {
+            Children = new List<ASTNode>();
+        }
+    }
     public abstract class INonTerminalNode : ParsingNode
     {
         public List<ParsingNode> Children { get; set; }

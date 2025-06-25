@@ -1,9 +1,9 @@
 ﻿using CishCompiler.Parsing;
 
-public class ParseTree
+public class ComplexSyntaxTree
 {
     public RootNode RootNode { get; set; }
-    public ParseTree(RootNode rootNode)
+    public ComplexSyntaxTree(RootNode rootNode)
     {
         RootNode = rootNode;
     }

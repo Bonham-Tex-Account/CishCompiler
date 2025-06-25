@@ -9,9 +9,14 @@ namespace CishCompiler.Parsing
 {
     public class Parser
     {
-        public static ParseTree ParseTokens(List<TokenNode> tokenList)
+        public static void ParseFile(List<TokenNode> tokenList)
         {
-            var tree = new ParseTree(new RootNode());
+            var tree = ParseTokensToCST(tokenList);
+            FixCST(tree);
+        }
+        static ComplexSyntaxTree ParseTokensToCST(List<TokenNode> tokenList)
+        {
+            var tree = new ComplexSyntaxTree(new RootNode());
             int currentLocation = 0;
             while (currentLocation < tokenList.Count)
             {
@@ -24,13 +29,14 @@ namespace CishCompiler.Parsing
 
             return tree;
         }
+
         static (ParsingNode lowerNode, int changeInLocation) ParseSingleExpression(ParsingNode currNode, List<TokenNode> tokenList, int currentLocation = 0)
         {
             if (currNode is INonTerminalNode ntNode)
             {
                 var currNodeGrammar = ParsingGrammar.GrammarRules[currNode.GetType()];
                 ;
-                
+
 
                 for (int currGrammar = 0; currGrammar < currNodeGrammar.Count; currGrammar++)
                 {
@@ -75,13 +81,58 @@ namespace CishCompiler.Parsing
             //correct node type 
             if (currNode.GetType().IsAssignableFrom(tokenList[currentLocation].GetType()))
             {
-                return (tokenList[currentLocation], currentLocation+1);
+                return (tokenList[currentLocation], currentLocation + 1);
             }
             else
             {
                 return (null, 0); // Failed to parse this node
             }
 
+        }
+        static void FixCST(ComplexSyntaxTree tree)
+        {
+            //fix the CST by rotating nodes if necessary
+            RotateIfNecessary(tree.RootNode);
+            ;
+            
+        }
+        static AbstractSyntaxTree ConvertToAST(ComplexSyntaxTree tree)
+        {
+           return new AbstractSyntaxTree(ConvertToASTRec(tree.RootNode));
+        }
+        static ASTNode ConvertToASTRec(ParsingNode node)
+        {
+            throw new Exception("Not implemented yet");
+        }
+        static void RotateIfNecessary(ParsingNode node)
+        {
+            //will potentially have problems with different symbols in the future
+            while (node is ValueExpression valueNode)
+            {
+                if (valueNode.Children.Count == 3 && valueNode.Children[2] is ValueExpression rightChild)
+                {
+                    if (rightChild.Children.Count == 3 && ((ArrhythmicOperatorNode)valueNode.Children[1]).Tier >= ((ArrhythmicOperatorNode)rightChild.Children[1]).Tier)
+                    {
+                        //if time to rotate left
+                        INonTerminalNode leftChild = (INonTerminalNode)valueNode.Children[0];
+                        leftChild.Children.Add(valueNode.Children[1]);
+                        valueNode.Children[1]= rightChild.Children[1];
+                        leftChild.Children.Add(rightChild.Children.First());
+                        rightChild.Children.RemoveRange(0,2);
+                        valueNode.Children[2]= rightChild.Children.First();
+                        continue;
+                    }
+                }
+                break;
+            }
+            if (node is INonTerminalNode nonTerminalNode)
+            {
+                foreach (var child in nonTerminalNode.Children)
+                {
+                    RotateIfNecessary(child);
+                }
+            }
+            ;
         }
     }
 
