@@ -15,10 +15,10 @@ namespace CishCompiler.Parsing
 
             [typeof(Expression)] = new List<List<Func<ParsingNode>>>
             {
-                new List<Func<ParsingNode>>{()=>new ExpandExpression(),()=> new Expression()},
-                new List<Func<ParsingNode>>{()=> new ExpandExpression()},
+                new List<Func<ParsingNode>>{()=>new ExpandedExpression(),()=> new Expression()},
+                new List<Func<ParsingNode>>{()=> new ExpandedExpression()},
             },
-            [typeof(ExpandExpression)] = new List<List<Func<ParsingNode>>>
+            [typeof(ExpandedExpression)] = new List<List<Func<ParsingNode>>>
             {
                 new List<Func<ParsingNode>> { ()=> new MAINKeyWordNode(),()=> new OpenBraceNode(),()=>new Expression(),()=> new CloseBraceNode() },
                 new List<Func<ParsingNode>> { ()=>new ObjectNode(), ()=>new IdentifierNode(), ()=>new AssignmentNode(), ()=>new ValueExpression(), ()=>new EndLineNode()},

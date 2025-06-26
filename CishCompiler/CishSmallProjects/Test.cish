@@ -1,1 +1,1 @@
-﻿MAIN { Int a = b + c ; a = 10 ; }
+﻿MAIN { Int b = "hi" ; Int a = b ; }

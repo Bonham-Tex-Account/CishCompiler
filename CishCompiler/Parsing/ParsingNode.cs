@@ -14,13 +14,15 @@ namespace CishCompiler.Parsing
     public class ASTNode : TokenNode
     {
         public List<ASTNode> Children;
+        public ParsingNode Node;
         public ASTNode() : base()
         {
             Children = new List<ASTNode>();
-        }
+        }       
         public ASTNode(TokenNode node) : base(node.Value, node.LineNumber, node.TokenNumber)
         {
             Children = new List<ASTNode>();
+            this.Node = node;
         }
     }
     public abstract class INonTerminalNode : ParsingNode
@@ -39,7 +41,7 @@ namespace CishCompiler.Parsing
     {
 
     }
-    public class  ExpandExpression: INonTerminalNode
+    public class  ExpandedExpression: INonTerminalNode
     {
         
     }

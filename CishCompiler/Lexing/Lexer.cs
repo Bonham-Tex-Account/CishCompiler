@@ -28,6 +28,8 @@ namespace CishCompiler.Lexing
             ["^INPUT$"] = (LineNumber, TokenNumber, Value) => new INPUTKeyWordNode(Value, LineNumber, TokenNumber),
             ["^OUTPUT$"] = (LineNumber, TokenNumber, Value) => new OUTPUTKeyWordNode(Value, LineNumber, TokenNumber),
             ["^FNC$"] = (LineNumber, TokenNumber, Value) => new FNCKeyWordNode(Value, LineNumber, TokenNumber),
+            ["^Int$"] = (LineNumber, TokenNumber, Value) => new IntegerNode(Value, LineNumber, TokenNumber),
+            ["^String$"] = (LineNumber, TokenNumber, Value) => new StringNode(Value, LineNumber, TokenNumber),
             ["^[A-Z][a-z]*$"] = (LineNumber, TokenNumber, Value) => new ObjectNode(Value, LineNumber, TokenNumber),
             ["^[ ]$"] = (LineNumber, TokenNumber, Value) => new SpaceNode(Value, LineNumber, TokenNumber),
             ["^[A-Z][a-z]*\\($"] = (LineNumber, TokenNumber, Value) => new FunctionNode(Value, LineNumber, TokenNumber),

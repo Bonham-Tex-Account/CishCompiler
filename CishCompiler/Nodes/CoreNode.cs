@@ -11,6 +11,24 @@ namespace CishCompiler.Nodes
         {
         }
     }
+    public class IntegerNode : ObjectNode
+    {
+        public IntegerNode() : base()
+        {
+        }
+        public IntegerNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
+    }
+    public class StringNode : ObjectNode
+    {
+        public StringNode() : base()
+        {
+        }
+        public StringNode(ReadOnlyMemory<char> value, int lineNumber, int tokenNumber) : base(value, lineNumber, tokenNumber)
+        {
+        }
+    }
     public class ObjectNode : TokenNode
     {
         public ObjectNode() : base()

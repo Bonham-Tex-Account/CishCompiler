@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CishCompiler.Parsing
 {
     public class Parser
     {
-        public static void ParseFile(List<TokenNode> tokenList)
+        public static AbstractSyntaxTree ParseFile(List<TokenNode> tokenList)
         {
             var tree = ParseTokensToCST(tokenList);
             FixCST(tree);
+            return ConvertToAST(tree);           
         }
         static ComplexSyntaxTree ParseTokensToCST(List<TokenNode> tokenList)
         {
@@ -32,6 +34,10 @@ namespace CishCompiler.Parsing
 
         static (ParsingNode lowerNode, int changeInLocation) ParseSingleExpression(ParsingNode currNode, List<TokenNode> tokenList, int currentLocation = 0)
         {
+            if (currNode is ErrorNode node)
+            {
+                throw new Exception("Token: " + node.Value + "Line: " + node.LineNumber + "Token: " + node.TokenNumber);
+            }
             if (currNode is INonTerminalNode ntNode)
             {
                 var currNodeGrammar = ParsingGrammar.GrammarRules[currNode.GetType()];
@@ -99,16 +105,14 @@ namespace CishCompiler.Parsing
         {
             //fix the CST by rotating nodes if necessary
             RotateIfNecessary(tree.RootNode);
-            ;
+
 
         }
         static AbstractSyntaxTree ConvertToAST(ComplexSyntaxTree tree)
         {
-            throw new Exception("Not implemented yet");
-            // Convert the complex syntax tree to an abstract syntax tree
-            // This will involve converting each node in the complex syntax tree to an ASTNode
-            // and ensuring that the structure is simplified and follows the rules of the AST.
-            // The implementation will depend on the specific requirements of the AST structure.
+            var astRoot = ConvertToASTRec(tree.RootNode.Children[0]);
+            var ast = new AbstractSyntaxTree(astRoot);
+            return ast;
         }
         static ASTNode ConvertToASTRec(ParsingNode node)
         {
@@ -118,25 +122,53 @@ namespace CishCompiler.Parsing
             }
             if (node is Expression exNode)
             {
-                if (exNode.Children[0] is ObjectNode)
+
+                if (exNode.Children.Count == 2)
                 {
-                    var tempNode = new ASTNode(ConvertToASTRec(exNode.Children[2]));
-                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[0]));
-                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[1]));
-                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[3]));
+                    // noexnode , exnode
+                    var tempNode = new ASTNode();
+                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[0]));// no exnode guaranteed end
+                    tempNode.Children.AddRange(ConvertToASTRec(exNode.Children[1]).Children); // exnode no end
+                    return tempNode;
                 }
-                if (exNode.Children[0] is IdentifierNode)
+                else
                 {
-                    var tempNode = new ASTNode(ConvertToASTRec(exNode.Children[1]));
-                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[0]));
-                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[2]));                  
+                    // noexnode
+
+                    var tempNode = new ASTNode();
+                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[0])); // no exnode guaranteed end
+                    return tempNode;
+                }
+            }
+            if (node is ExpandedExpression preExNode)
+            {
+                if (preExNode.Children[0] is MAINKeyWordNode mainNode)
+                {
+                    var temp = new ASTNode(ConvertToASTRec(mainNode));
+                    temp.Children = ConvertToASTRec(preExNode.Children[2]).Children;
+                    return temp;
+                }
+                if (preExNode.Children[0] is ObjectNode objNode)
+                {
+                    var tempNode = new ASTNode(ConvertToASTRec(preExNode.Children[2]));
+                    tempNode.Children.Add(ConvertToASTRec(objNode));
+                    tempNode.Children.Add(ConvertToASTRec(preExNode.Children[1]));
+                    tempNode.Children.Add(ConvertToASTRec(preExNode.Children[3]));
+                    return tempNode;
+                }
+                if (preExNode.Children[0] is IdentifierNode idNode)
+                {
+                    var tempNode = new ASTNode(ConvertToASTRec(preExNode.Children[1]));
+                    tempNode.Children.Add(ConvertToASTRec(idNode));
+                    tempNode.Children.Add(ConvertToASTRec(preExNode.Children[2]));
+                    return tempNode;
                 }
             }
             if (node is ValueExpression valNode)
             {
-                if(valNode.Children.Count==3)
+                if (valNode.Children.Count == 3)
                 {
-                   var tempNode = new ASTNode((TokenNode)valNode.Children[1]);
+                    var tempNode = new ASTNode((TokenNode)valNode.Children[1]);
                     tempNode.Children.Add(ConvertToASTRec(valNode.Children[0]));
                     tempNode.Children.Add(ConvertToASTRec(valNode.Children[2]));
                     return tempNode;
@@ -144,6 +176,19 @@ namespace CishCompiler.Parsing
                 else
                 {
                     return new ASTNode(ConvertToASTRec(valNode.Children[0]));
+                }
+            }
+            if (node is NoEXValueExpression noExValNode)
+            {
+                if (noExValNode.Children.Count == 3)
+                {
+
+
+                    return new ASTNode((TokenNode)noExValNode.Children[1]);
+                }
+                else
+                {
+                    return new ASTNode(ConvertToASTRec(noExValNode.Children[0]));
                 }
             }
             throw new Exception("Node type not recognized for AST conversion: " + node.GetType().Name);
