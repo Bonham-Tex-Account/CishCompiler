@@ -39,6 +39,10 @@ namespace CishCompiler.Parsing
     {
 
     }
+    public class  ExpandExpression: INonTerminalNode
+    {
+        
+    }
     public class ValueExpression : INonTerminalNode
     {
 

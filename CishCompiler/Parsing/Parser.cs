@@ -47,6 +47,12 @@ namespace CishCompiler.Parsing
                     for (int tokenInGrammar = 0; tokenInGrammar < currNodeGrammar[currGrammar].Count; tokenInGrammar++)
                     {
                         //for each node in production
+                        if (tempLocation >= tokenList.Count)
+                        {
+                            //if we run out of tokens, we can't parse this grammar rule
+                            tempChildren.Clear();
+                            break;
+                        }
                         if (tokenList[tempLocation] is SpaceNode)
                         {
                             tempLocation++;
@@ -94,15 +100,53 @@ namespace CishCompiler.Parsing
             //fix the CST by rotating nodes if necessary
             RotateIfNecessary(tree.RootNode);
             ;
-            
+
         }
         static AbstractSyntaxTree ConvertToAST(ComplexSyntaxTree tree)
         {
-           return new AbstractSyntaxTree(ConvertToASTRec(tree.RootNode));
+            throw new Exception("Not implemented yet");
+            // Convert the complex syntax tree to an abstract syntax tree
+            // This will involve converting each node in the complex syntax tree to an ASTNode
+            // and ensuring that the structure is simplified and follows the rules of the AST.
+            // The implementation will depend on the specific requirements of the AST structure.
         }
         static ASTNode ConvertToASTRec(ParsingNode node)
         {
-            throw new Exception("Not implemented yet");
+            if (node is TokenNode tokNode)
+            {
+                return new ASTNode(tokNode);
+            }
+            if (node is Expression exNode)
+            {
+                if (exNode.Children[0] is ObjectNode)
+                {
+                    var tempNode = new ASTNode(ConvertToASTRec(exNode.Children[2]));
+                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[0]));
+                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[1]));
+                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[3]));
+                }
+                if (exNode.Children[0] is IdentifierNode)
+                {
+                    var tempNode = new ASTNode(ConvertToASTRec(exNode.Children[1]));
+                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[0]));
+                    tempNode.Children.Add(ConvertToASTRec(exNode.Children[2]));                  
+                }
+            }
+            if (node is ValueExpression valNode)
+            {
+                if(valNode.Children.Count==3)
+                {
+                   var tempNode = new ASTNode((TokenNode)valNode.Children[1]);
+                    tempNode.Children.Add(ConvertToASTRec(valNode.Children[0]));
+                    tempNode.Children.Add(ConvertToASTRec(valNode.Children[2]));
+                    return tempNode;
+                }
+                else
+                {
+                    return new ASTNode(ConvertToASTRec(valNode.Children[0]));
+                }
+            }
+            throw new Exception("Node type not recognized for AST conversion: " + node.GetType().Name);
         }
         static void RotateIfNecessary(ParsingNode node)
         {
@@ -116,10 +160,10 @@ namespace CishCompiler.Parsing
                         //if time to rotate left
                         INonTerminalNode leftChild = (INonTerminalNode)valueNode.Children[0];
                         leftChild.Children.Add(valueNode.Children[1]);
-                        valueNode.Children[1]= rightChild.Children[1];
+                        valueNode.Children[1] = rightChild.Children[1];
                         leftChild.Children.Add(rightChild.Children.First());
-                        rightChild.Children.RemoveRange(0,2);
-                        valueNode.Children[2]= rightChild.Children.First();
+                        rightChild.Children.RemoveRange(0, 2);
+                        valueNode.Children[2] = rightChild.Children.First();
                         continue;
                     }
                 }
