@@ -144,13 +144,13 @@ namespace CishCompiler.Parsing
             {
                 if (preExNode.Children[0] is MAINKeyWordNode mainNode)
                 {
-                    var temp = new ASTNode(ConvertToASTRec(mainNode));
+                    var temp = ConvertToASTRec(mainNode);
                     temp.Children = ConvertToASTRec(preExNode.Children[2]).Children;
                     return temp;
                 }
                 if (preExNode.Children[0] is ObjectNode objNode)
                 {
-                    var tempNode = new ASTNode(ConvertToASTRec(preExNode.Children[2]));
+                    var tempNode = ConvertToASTRec(preExNode.Children[2]);
                     tempNode.Children.Add(ConvertToASTRec(objNode));
                     tempNode.Children.Add(ConvertToASTRec(preExNode.Children[1]));
                     tempNode.Children.Add(ConvertToASTRec(preExNode.Children[3]));
@@ -158,7 +158,7 @@ namespace CishCompiler.Parsing
                 }
                 if (preExNode.Children[0] is IdentifierNode idNode)
                 {
-                    var tempNode = new ASTNode(ConvertToASTRec(preExNode.Children[1]));
+                    var tempNode = ConvertToASTRec(preExNode.Children[1]);
                     tempNode.Children.Add(ConvertToASTRec(idNode));
                     tempNode.Children.Add(ConvertToASTRec(preExNode.Children[2]));
                     return tempNode;
@@ -175,7 +175,7 @@ namespace CishCompiler.Parsing
                 }
                 else
                 {
-                    return new ASTNode(ConvertToASTRec(valNode.Children[0]));
+                    return ConvertToASTRec(valNode.Children[0]);
                 }
             }
             if (node is NoEXValueExpression noExValNode)
@@ -188,7 +188,7 @@ namespace CishCompiler.Parsing
                 }
                 else
                 {
-                    return new ASTNode(ConvertToASTRec(noExValNode.Children[0]));
+                    return ConvertToASTRec(noExValNode.Children[0]);
                 }
             }
             throw new Exception("Node type not recognized for AST conversion: " + node.GetType().Name);
