@@ -14,7 +14,7 @@ namespace CishCompiler.Parsing
         {
             var tree = ParseTokensToCST(tokenList);
             FixCST(tree);
-            return ConvertToAST(tree);           
+            return ConvertToAST(tree);
         }
         static ComplexSyntaxTree ParseTokensToCST(List<TokenNode> tokenList)
         {
@@ -23,8 +23,13 @@ namespace CishCompiler.Parsing
             while (currentLocation < tokenList.Count)
             {
                 var tempTree = ParseSingleExpression(new Expression(), tokenList, currentLocation);
-                // will do error checking here
-                tree.RootNode.Children.Add(tempTree.lowerNode);
+                // will do error checking
+                var temp = tempTree.lowerNode;
+                if(temp!=null)
+                {
+                    tree.RootNode.Children.Add(temp);
+                }
+               
                 currentLocation = (tempTree.changeInLocation);
             }
 
@@ -32,7 +37,7 @@ namespace CishCompiler.Parsing
             return tree;
         }
 
-        static (ParsingNode lowerNode, int changeInLocation) ParseSingleExpression(ParsingNode currNode, List<TokenNode> tokenList, int currentLocation = 0)
+        static (ParsingNode? lowerNode, int changeInLocation) ParseSingleExpression(ParsingNode currNode, List<TokenNode> tokenList, int currentLocation = 0)
         {
             if (currNode is ErrorNode node)
             {
@@ -134,7 +139,6 @@ namespace CishCompiler.Parsing
                 else
                 {
                     // noexnode
-
                     var tempNode = new ASTNode();
                     tempNode.Children.Add(ConvertToASTRec(exNode.Children[0])); // no exnode guaranteed end
                     return tempNode;
@@ -145,7 +149,18 @@ namespace CishCompiler.Parsing
                 if (preExNode.Children[0] is MAINKeyWordNode mainNode)
                 {
                     var temp = ConvertToASTRec(mainNode);
-                    temp.Children = ConvertToASTRec(preExNode.Children[2]).Children;
+                    var bodyNode = new ASTNode(new BodyNode());
+                    bodyNode.Children = ConvertToASTRec(preExNode.Children[2]).Children;
+                    temp.Children.Add(bodyNode);
+                    return temp;
+                }
+                if (preExNode.Children[0] is IFKeyWordNode || preExNode.Children[0] is WHILEKeyWordNode)
+                {
+                    var temp = ConvertToASTRec(preExNode.Children[0]);
+                    temp.Children.Add(ConvertToASTRec(preExNode.Children[1])); // condition
+                    var bodyNode = new ASTNode(new BodyNode());
+                    bodyNode.Children = ConvertToASTRec(preExNode.Children[3]).Children;
+                    temp.Children.Add(bodyNode);
                     return temp;
                 }
                 if (preExNode.Children[0] is ObjectNode objNode)
@@ -178,12 +193,24 @@ namespace CishCompiler.Parsing
                     return ConvertToASTRec(valNode.Children[0]);
                 }
             }
+            if (node is CompExpression compNode)
+            {
+                if (compNode.Children.Count == 3)
+                {
+                    var tempNode = new ASTNode((TokenNode)compNode.Children[1]);
+                    tempNode.Children.Add(ConvertToASTRec(compNode.Children[0]));
+                    tempNode.Children.Add(ConvertToASTRec(compNode.Children[2]));
+                    return tempNode;
+                }
+                else
+                {
+                    return ConvertToASTRec(compNode.Children[0]);
+                }
+            }
             if (node is NoEXValueExpression noExValNode)
             {
                 if (noExValNode.Children.Count == 3)
                 {
-
-
                     return new ASTNode((TokenNode)noExValNode.Children[1]);
                 }
                 else

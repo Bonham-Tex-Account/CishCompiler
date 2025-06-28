@@ -1,1 +1,1 @@
-﻿MAIN { Int b = a + 10 ; Int a = b ; }
+﻿MAIN { WHILE b == 10 { Int b = 10 ; } }
