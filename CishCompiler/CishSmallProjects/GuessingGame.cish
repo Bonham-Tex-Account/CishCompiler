@@ -1,20 +1,20 @@
 ﻿MAIN
 {
-	INTEGER guess = 0 ;
+ String guess = 0 ;
 
-	INTEGER number = INPUT ;
+ String number = 0 ;
 
-	WHILE guess != number ;
-	{
-		IF guess < number THEN ;
-		{
-			OUPTPUT "Too low! Try again.\n" ;
-		}
-		IF guess > number THEN;
-		{
-			OUPTPUT "Too high! Try again.\n" ;
-		}
-		number = INPUT ;
-	}
-	OUPTPUT "Congratulations! You guessed the number!\n" ;
+ WHILE guess != number 
+ {
+ IF guess < number
+ {
+ OUPTPUT "Too low! Try again.\n" ;
+ }
+ IF guess > number 
+ {
+ OUPTPUT "Too high! Try again.\n" ;
+ }
+ INPUT number ;
+ }
+ OUPTPUT "Congratulations! You guessed the number!\n" ;
 }

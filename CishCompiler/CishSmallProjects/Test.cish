@@ -1,1 +1,1 @@
-﻿MAIN { WHILE b == 10 { Int b = 10 ; } }
+﻿MAIN { String a = "" ; INPUT a ; OUTPUT a ; }

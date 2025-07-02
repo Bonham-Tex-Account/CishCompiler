@@ -12,14 +12,16 @@ namespace CishCompiler.SemanticAnalysis
 {
     public class SemanticAnalysiser
     {
+        public static ScopeNode? Root { get; private set; }
+
         public static List<ErrorData> Analyze(AbstractSyntaxTree tree)
         {
-            var RootScope = new ScopeNode(null);
+            Root = new ScopeNode(null);
             int scopeNum = 0;
-            GetSymbols(tree.Root, RootScope,ref scopeNum);
-            
+            GetSymbols(tree.Root, Root,ref scopeNum);
+            ;
             scopeNum = 1;
-            var errors = GetErrors(tree,RootScope, ref scopeNum);
+            var errors = GetErrors(tree,Root, ref scopeNum);
            
             return errors;
 
@@ -76,7 +78,7 @@ namespace CishCompiler.SemanticAnalysis
                 if (currNode.Children[i].Node is KeywordNode)
                 {
 
-                    CheckNode(currNode.Children[i], currScope.ChildScopes[i], ref scopeNum,ref errorList);
+                    CheckNode(currNode.Children[i], currScope.ChildScopes[currScopeIndex], ref scopeNum,ref errorList);
                     currScopeIndex++;
                 }
                 else if (currNode.Children[i].Node is ArrhythmicOperatorNode

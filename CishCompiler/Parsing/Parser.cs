@@ -154,6 +154,12 @@ namespace CishCompiler.Parsing
                     temp.Children.Add(bodyNode);
                     return temp;
                 }
+                if (preExNode.Children[0] is INPUTKeyWordNode || preExNode.Children[0] is OUTPUTKeyWordNode)
+                {
+                    var temp= ConvertToASTRec(preExNode.Children[0]);
+                    temp.Children.Add(ConvertToASTRec(preExNode.Children[1])); // value expression
+                    return temp;
+                }
                 if (preExNode.Children[0] is IFKeyWordNode || preExNode.Children[0] is WHILEKeyWordNode)
                 {
                     var temp = ConvertToASTRec(preExNode.Children[0]);

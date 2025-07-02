@@ -25,6 +25,8 @@ namespace CishCompiler.Parsing
                 new List<Func<ParsingNode>> { ()=>new IdentifierNode(), ()=>new AssignmentOperatorNode(), ()=>new ValueExpression(), ()=>new EndLineNode()},
                 new List<Func<ParsingNode>> { ()=> new IFKeyWordNode(), ()=> new CompExpression(),()=> new OpenBraceNode(),()=>new Expression(),()=>new CloseBraceNode()},
                 new List<Func<ParsingNode>> { ()=> new WHILEKeyWordNode(), ()=> new CompExpression(),()=> new OpenBraceNode(),()=>new Expression(),()=>new CloseBraceNode()},
+                new List<Func<ParsingNode>> { ()=> new OUTPUTKeyWordNode(), ()=> new ValueExpression(),()=>new EndLineNode()},
+                new List<Func<ParsingNode>> { ()=> new INPUTKeyWordNode(), ()=> new ValueExpression(),()=>new EndLineNode()}
             },
             [typeof(ValueExpression)] = new List<List<Func<ParsingNode>>>
             {
