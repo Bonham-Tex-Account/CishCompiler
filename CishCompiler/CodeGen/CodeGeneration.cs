@@ -18,11 +18,12 @@ namespace CishCompiler.CodeGen
                 "",
                 ".assembly ILExample {}",
                 "",
+            ".class public auto ansi beforefieldinit C\r\nextends [System.Runtime]System.Object{",
                 ".method static void Main() il managed",
                 "{",
                 "    .entrypoint"
             ];
-        static string[] MAINEND = ["    ret", "}"];
+        static string[] MAINEND = ["    ret", "}","}"];
         static List<Symbol> symbols = new List<Symbol>();
         static List<ComparisonOperatorNode> compOps = new List<ComparisonOperatorNode>();
         static int currConditionalIndex = 0;
@@ -125,7 +126,7 @@ namespace CishCompiler.CodeGen
             {
                 sb.Clear();
                 sb.Append($"[{i + locals.Count}] ");
-                sb.Append("bool ");
+                sb.Append("bool");
                 if (i != conditionals.Count - 1)
                 {
                     sb.Append(",");

@@ -13,7 +13,9 @@ namespace CishCompiler.CodeGen
             { "==", "ceq" },
             {"+","add" },
             { "-","sub"},
-            { "!=","ceq        // pushes 1 if equal, 0 if not equal\r\nldc.i4.0   // push 0\r\nceq        // pushes 1 if previous result was 0 → means \"not equal\""}
+            { "!=","ceq        // pushes 1 if equal, 0 if not equal\r\nldc.i4.0   // push 0\r\nceq        // pushes 1 if previous result was 0 → means \"not equal\""},
+            {">","cgt" },
+            { "<","clt"}
 
         };
     }

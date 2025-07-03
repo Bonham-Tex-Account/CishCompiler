@@ -2,23 +2,74 @@
 
 .assembly ILExample {}
 
+.class public auto ansi beforefieldinit C
+extends [System.Runtime]System.Object{
 .method static void Main() il managed
 {
     .entrypoint
     .maxstack 2
 .locals init (
-[0] string a
+[0] string guess,
+[1] string number,
+[2] bool,
+[3] bool,
+[4] bool
 )
 //Value
 ldstr ""
 //Assignment
 stloc.0
+//Value
+ldstr ""
+//Assignment
+stloc.1
+while0:
+//If or While
+//Operation
+ldloc.0
+ldloc.1
+ceq        // pushes 1 if equal, 0 if not equal
+ldc.i4.0   // push 0
+ceq        // pushes 1 if previous result was 0 → means "not equal"
+brfalse.s if0
+//InnerCode
+//If or While
+//Operation
+ldloc.0
+ldloc.1
+clt
+brfalse.s if1
+//InnerCode
+//Output
+//Operation
+ldstr "Too"
+ldstr "low!"
+add
+call void [mscorlib]System.Console::WriteLine(string)
+if1:
+//If or While
+//Operation
+ldloc.0
+ldloc.1
+cgt
+brfalse.s if2
+//InnerCode
+//Output
+//Operation
+ldstr "Too"
+ldstr "high!"
+add
+call void [mscorlib]System.Console::WriteLine(string)
+if2:
 //Input
 call string [mscorlib]System.Console::ReadLine()
 //Store Input
-stloc.0
+stloc.1
+br.s while0
+if0:
 //Output
-ldloc.0
+ldstr "Congratulations!"
 call void [mscorlib]System.Console::WriteLine(string)
     ret
+}
 }

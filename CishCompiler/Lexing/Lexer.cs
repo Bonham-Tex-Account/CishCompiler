@@ -31,7 +31,7 @@ namespace CishCompiler.Lexing
             ["^Int$"] = (LineNumber, TokenNumber, Value) => new IntegerNode(Value, LineNumber, TokenNumber),
             ["^String$"] = (LineNumber, TokenNumber, Value) => new StringNode(Value, LineNumber, TokenNumber),
             ["^[A-Z][a-z]*$"] = (LineNumber, TokenNumber, Value) => new ObjectNode(Value, LineNumber, TokenNumber),
-            ["^[ ]$"] = (LineNumber, TokenNumber, Value) => new SpaceNode(Value, LineNumber, TokenNumber),
+            ["^[\t\n\r ]$"] = (LineNumber, TokenNumber, Value) => new SpaceNode(Value, LineNumber, TokenNumber),
             ["^[A-Z][a-z]*\\($"] = (LineNumber, TokenNumber, Value) => new FunctionNode(Value, LineNumber, TokenNumber),
             ["^\\+$"] = (LineNumber, TokenNumber, Value) => new PlusOperatorNode(Value, LineNumber, TokenNumber),
             ["^-$"] = (LineNumber, TokenNumber, Value) => new MinusOperatorNode(Value, LineNumber, TokenNumber),
@@ -77,12 +77,17 @@ namespace CishCompiler.Lexing
                 tokenNum = 0; // Reset token number for each line
                 for (int j = 0; j < codeLines[i].Length; j++)
                 {
-                    if (codeLines[i][j] == ' ' && currToken.Length > 0)
+                   
+                    if (Regex.IsMatch(codeLines[i][j].ToString(), "^[\t\n\r ]$"))
                     {
-                        tokens.Add(GetToken(currToken.ToString().AsMemory(), i, tokenNum));
-                        currToken.Clear();
-                        tokenNum += 2;
-                        tokens.Add(new SpaceNode(" ".AsMemory(), i, tokenNum));
+                        if (currToken.Length > 0)
+                        {
+                            tokens.Add(GetToken(currToken.ToString().AsMemory(), i, tokenNum));
+                            currToken.Clear();
+                            tokenNum++;
+                        }                        
+                        tokens.Add(new SpaceNode(codeLines[i][j].ToString().AsMemory(), i, tokenNum));
+                        tokenNum ++;
                     }
                     else
                     {

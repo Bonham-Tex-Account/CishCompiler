@@ -25,11 +25,11 @@ namespace CishCompiler.Parsing
                 var tempTree = ParseSingleExpression(new Expression(), tokenList, currentLocation);
                 // will do error checking
                 var temp = tempTree.lowerNode;
-                if(temp!=null)
+                if (temp != null)
                 {
                     tree.RootNode.Children.Add(temp);
                 }
-               
+
                 currentLocation = (tempTree.changeInLocation);
             }
 
@@ -64,7 +64,7 @@ namespace CishCompiler.Parsing
                             tempChildren.Clear();
                             break;
                         }
-                        if (tokenList[tempLocation] is SpaceNode)
+                        while (tokenList[tempLocation] is SpaceNode)
                         {
                             tempLocation++;
 
@@ -156,7 +156,7 @@ namespace CishCompiler.Parsing
                 }
                 if (preExNode.Children[0] is INPUTKeyWordNode || preExNode.Children[0] is OUTPUTKeyWordNode)
                 {
-                    var temp= ConvertToASTRec(preExNode.Children[0]);
+                    var temp = ConvertToASTRec(preExNode.Children[0]);
                     temp.Children.Add(ConvertToASTRec(preExNode.Children[1])); // value expression
                     return temp;
                 }
