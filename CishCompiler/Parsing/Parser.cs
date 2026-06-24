@@ -64,7 +64,7 @@ namespace CishCompiler.Parsing
                             tempChildren.Clear();
                             break;
                         }
-                        while (tokenList[tempLocation] is SpaceNode)
+                        while (tokenList[tempLocation] is SpaceNode || tokenList[tempLocation] is CommaNode)
                         {
                             tempLocation++;
 
@@ -152,6 +152,26 @@ namespace CishCompiler.Parsing
                     var bodyNode = new ASTNode(new BodyNode());
                     bodyNode.Children = ConvertToASTRec(preExNode.Children[2]).Children;
                     temp.Children.Add(bodyNode);
+                    return temp;
+                }
+                if (preExNode.Children[0] is FNCKeyWordNode funcNode)
+                {
+                    int index = 2;
+                    var temp = ConvertToASTRec(preExNode.Children[index]);
+                    index++;
+                    while (preExNode.Children[index] is ObjectNode)
+                    {
+                        temp.Children.Add(ConvertToASTRec(preExNode.Children[index + 1]));
+                        index += 2;
+                    }
+                    index += 2;
+                    var bodyNode = new ASTNode(new BodyNode());
+                    bodyNode.Children = ConvertToASTRec(preExNode.Children[index]).Children;
+                    temp.Children.Add(bodyNode);
+                    index++;
+                    var retTemp = ConvertToASTRec(preExNode.Children[index]);
+                    retTemp.Children.Add(ConvertToASTRec(preExNode.Children[index + 1]));
+                    temp.Children.Add(retTemp);
                     return temp;
                 }
                 if (preExNode.Children[0] is INPUTKeyWordNode || preExNode.Children[0] is OUTPUTKeyWordNode)

@@ -21,8 +21,11 @@ namespace CishCompiler.Parsing
             [typeof(ExpandedExpression)] = new List<List<Func<ParsingNode>>>
             {
                 new List<Func<ParsingNode>> { ()=> new MAINKeyWordNode(),()=> new OpenBraceNode(),()=>new Expression(),()=> new CloseBraceNode() },
-                new List<Func<ParsingNode>> { ()=>new ObjectNode(), ()=>new IdentifierNode(), ()=>new AssignmentNode(), ()=>new ValueExpression(), ()=>new EndLineNode()},
-                new List<Func<ParsingNode>> { ()=>new IdentifierNode(), ()=>new AssignmentOperatorNode(), ()=>new ValueExpression(), ()=>new EndLineNode()},
+                new List<Func<ParsingNode>> { ()=> new FNCKeyWordNode(),()=>new ObjectNode(),()=> new FunctionNode(),()=>new CloseParenthesisNode(),()=>new OpenBraceNode(),()=>new Expression(),()=> new RETURNKeyWordNode(),()=>new ValueExpression(),()=>new EndLineNode(),()=> new CloseBraceNode()},
+                new List<Func<ParsingNode>> { ()=> new CLASSKeyWordNode(),()=> new ObjectNode(),()=>new OpenBraceNode(),()=>new Expression(),()=> new CloseBraceNode()},
+                new List<Func<ParsingNode>> { ()=> new ObjectNode(), ()=>new IdentifierNode(), ()=>new AssignmentNode(), ()=>new ValueExpression(), ()=>new EndLineNode()},
+                new List<Func<ParsingNode>> { ()=> new IdentifierNode(), ()=>new AssignmentOperatorNode(), ()=>new ValueExpression(), ()=>new EndLineNode()},
+
                 new List<Func<ParsingNode>> { ()=> new IFKeyWordNode(), ()=> new CompExpression(),()=> new OpenBraceNode(),()=>new Expression(),()=>new CloseBraceNode()},
                 new List<Func<ParsingNode>> { ()=> new WHILEKeyWordNode(), ()=> new CompExpression(),()=> new OpenBraceNode(),()=>new Expression(),()=>new CloseBraceNode()},
                 new List<Func<ParsingNode>> { ()=> new OUTPUTKeyWordNode(), ()=> new ValueExpression(),()=>new EndLineNode()},
@@ -39,15 +42,25 @@ namespace CishCompiler.Parsing
             {
                 new List<Func<ParsingNode>> {()=> new OpenParenthesisNode(),()=> new ValueExpression(),()=> new CloseParenthesisNode()},
                 new List<Func<ParsingNode>> {()=> new ValueNode()},
-                new List<Func<ParsingNode>> {()=> new IdentifierNode()}
-
+                new List<Func<ParsingNode>> {()=> new IdentifierNode()},
+                new List<Func<ParsingNode>> { ()=> new FunctionNode(),()=>new CloseParenthesisNode()},
             },
             [typeof(CompExpression)] = new List<List<Func<ParsingNode>>>
             {
                 new List<Func<ParsingNode>> { ()=>new ValueExpression(),()=>new ComparisonOperatorNode(),()=> new ValueExpression()},
                 new List<Func<ParsingNode>> { ()=> new IdentifierNode()}
 
-            }
+            },
+            [typeof(FunctionExpression)] = new List<List<Func<ParsingNode>>>
+            {
+                new List<Func<ParsingNode>> {()=> new NoExFunctionExpression(),()=>new FunctionExpression() },
+                new List<Func<ParsingNode>> {}
+
+            },
+            [typeof(NoExFunctionExpression)] = new List<List<Func<ParsingNode>>>
+            {
+                new List<Func<ParsingNode>> {()=> new ObjectNode(),()=>new IdentifierNode() },
+            },
         };
 
 
