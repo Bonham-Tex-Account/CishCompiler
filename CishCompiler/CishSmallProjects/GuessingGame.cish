@@ -1,0 +1,20 @@
+﻿MAIN
+{
+ String guess = "" ;
+
+ String number = "" ;
+
+ WHILE guess != number 
+ {
+ IF guess < number
+ {
+ OUTPUT "low!" ;
+ }
+ IF guess > number 
+ {
+ OUTPUT "high!" ;
+ }
+ INPUT number ;
+ }
+ OUTPUT "Congratulations!" ;
+}
