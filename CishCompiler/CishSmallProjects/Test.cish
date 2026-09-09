@@ -1,1 +1,1 @@
-﻿MAIN { String a = "" ; INPUT a ; OUTPUT a ; }
+﻿MAIN { Int a = 10 ; }

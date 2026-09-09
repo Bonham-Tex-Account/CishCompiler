@@ -30,6 +30,7 @@ namespace CishCompiler.CodeGen
         public static List<string> GenerateMainMethod(ASTNode mainNode)
         {
             var codeLines = new List<string>();
+            currConditionalIndex = 0;
             //Generate the main method header
             codeLines.AddRange(MAINDECLARATION);
             codeLines.Add("    .maxstack " + GetStackSize(mainNode));

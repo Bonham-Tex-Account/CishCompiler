@@ -10,8 +10,8 @@ namespace LexerTest
         public void TestFile()
         {
             // Correct the file extension spelling error from "cish" to "cs"
-            //string[] codeLines = File.ReadAllLines("C:\\Users\\Tex\\OneDrive\\Documents\\Visual Studio 2022\\Projects\\CompilerCamp\\CishCompiler\\CishSmallProjects\\Test.cish");//Test file
-            string[] codeLines = File.ReadAllLines("C:\\Users\\Tex\\OneDrive\\Documents\\Visual Studio 2022\\Projects\\CompilerCamp\\CishCompiler\\CishSmallProjects\\GuessingGame.cish");//guessing Game
+            string[] codeLines = File.ReadAllLines(Path.Combine(RepoRoot(), "CishCompiler", "CishSmallProjects", "Test.cish"));
+            //string[] codeLines = File.ReadAllLines(Path.Combine(RepoRoot(), "CishCompiler", "CishSmallProjects", "GuessingGame.cish"));
             var lexedNodes = Lexer.TokenizeInputCode(codeLines);
             ;
             var ast = Parser.ParseFile(lexedNodes);
@@ -20,9 +20,22 @@ namespace LexerTest
             ;
             var codeLinesGenerated = CodeGeneration.GenerateMainMethod(ast.Root);
             ;
-            File.WriteAllLines("C:\\Users\\Tex\\OneDrive\\Documents\\Visual Studio 2022\\Projects\\CompilerCamp\\CishCompiler\\TestSharpLabIl\\Il.txt", codeLinesGenerated);
+            File.WriteAllLines(Path.Combine(RepoRoot(), "CishCompiler", "TestSharpLabIl", "Il.txt"), codeLinesGenerated);
 
         }
 
+        static string RepoRoot()
+        {
+            DirectoryInfo? dir = new DirectoryInfo(AppContext.BaseDirectory);
+            while (dir != null)
+            {
+                if (File.Exists(Path.Combine(dir.FullName, "CishCompiler.sln")))
+                {
+                    return dir.FullName;
+                }
+                dir = dir.Parent;
+            }
+            throw new DirectoryNotFoundException("CishCompiler.sln not found above " + AppContext.BaseDirectory);
+        }
     }
 }

@@ -63,4 +63,11 @@ namespace CishCompiler.Parsing
     {
 
     }
+    public class FunctionExpression : INonTerminalNode
+    {
+    }
+    public class NoExFunctionExpression : INonTerminalNode
+    {
+    }
+
 }
