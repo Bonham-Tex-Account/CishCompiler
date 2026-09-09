@@ -1,0 +1,12 @@
+MAIN
+{
+ Int a = 3 ;
+ Int b = 4 ;
+ Int c = a + b ;
+ Int d = 5 ;
+ IF c > d
+ {
+  OUTPUT "big" ;
+ }
+ OUTPUT "done" ;
+}

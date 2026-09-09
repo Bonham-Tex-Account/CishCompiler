@@ -1,0 +1,12 @@
+MAIN
+{
+ Int i = 0 ;
+ Int n = 3 ;
+ Int one = 1 ;
+ WHILE i < n
+ {
+  OUTPUT "tick" ;
+  i = i + one ;
+ }
+ OUTPUT "end" ;
+}
